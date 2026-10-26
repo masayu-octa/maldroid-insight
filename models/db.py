@@ -196,3 +196,27 @@ def run_ids_for_dataset(dataset_id):
 def delete_run(run_id):
     with connect() as con:
         con.execute("DELETE FROM runs WHERE id = ?", (run_id,))
+
+
+
+# ---------------- SUS ----------------
+def add_sus(respondent, answers, score):
+    with connect() as con:
+        con.execute("INSERT INTO sus_responses (respondent, answers, score, created_at) VALUES (?,?,?,?)",
+                    (respondent, json.dumps(answers), score, datetime.now().strftime("%Y-%m-%d %H:%M")))
+
+
+def list_sus():
+    with connect() as con:
+        rows = con.execute("SELECT * FROM sus_responses ORDER BY id").fetchall()
+    out = []
+    for r in rows:
+        d = dict(r)
+        d["answers"] = json.loads(d["answers"]) if d["answers"] else []
+        out.append(d)
+    return out
+
+
+def delete_sus(sus_id):
+    with connect() as con:
+        con.execute("DELETE FROM sus_responses WHERE id = ?", (sus_id,))
