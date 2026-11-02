@@ -13,6 +13,11 @@ def render_pipeline():
     apply_pending()
     hero(t("nav_pipeline"), t("pl_sub"))
     flash()
+    steps_box = st.empty()
+    _steps(steps_box, True)
+    with st.expander(t("pl_steps_help")):
+        for n in ("log1p", "scaler", "smote", "model", "eval"):
+            st.markdown(f"**{t('pl_step_' + n + '_t')}**: {t('pl_step_' + n)}")
     datasets = datasets_ctl.list_datasets()
     if not datasets:
         st.info(t("ds_none"))
@@ -82,6 +87,7 @@ def render_pipeline():
     if len(top) and top.iloc[0] > 2.0:
         st.warning(t("pl_leak_hint", f=top.index[0], s=float(top.iloc[0])))
 
+    _steps(steps_box, use_smote)
     steps = [("log1p", True), ("RobustScaler", True), ("SMOTE", use_smote), ("Model", True), ("Evaluate", True)]
     chips = '<span class="arrow">→</span>'.join(
         f'<span class="step{"" if on else " off"}">{n}</span>' for n, on in steps)
@@ -115,7 +121,13 @@ def render_pipeline():
 
     _history(ds_id)
 
-
+def _steps(box, use_smote):
+    """Baris langkah pipeline di bagian atas halaman (SMOTE dicoret bila dimatikan)."""
+    steps = [("log1p", True), ("RobustScaler", True), ("SMOTE", use_smote), ("Model", True), ("Evaluate", True)]
+    chips = '<span class="arrow">→</span>'.join(
+        f'<span class="step{"" if on else " off"}">{n}</span>' for n, on in steps)
+    box.markdown(f'<div class="steps">{chips}</div>', unsafe_allow_html=True)
+    
 def _history(ds_id):
     runs = ctl.list_runs(ds_id)
     st.markdown(f"### {t('pl_res_title')}")

@@ -1,0 +1,21 @@
+{
+ "ai_title": "AI Assistant",
+ "ai_note": "Penerangan dan jawapan ditulis oleh AI (Google Gemini) dan mungkin mengandungi kesilapan. Hanya ringkasan pendek keputusan dihantar, bukan data mentah anda.",
+ "ai_summary_title": "Penerangan automatik",
+ "ai_badge": "Dijana oleh AI",
+ "ai_thinking": "AI sedang berfikir...",
+ "ai_fallback_note": "Penerangan AI tidak tersedia, jadi penerangan berasaskan peraturan dipaparkan.",
+ "ai_err_nokey": "AI Assistant belum disediakan: tambah GEMINI_API_KEY dalam .streamlit/secrets.toml. Penerangan berasaskan peraturan dipaparkan sebagai ganti.",
+ "ai_err_quota": "Kuota AI percuma sedang habis. Cuba lagi beberapa minit lagi.",
+ "ai_err_key": "Kunci AI ditolak. Semak GEMINI_API_KEY dalam .streamlit/secrets.toml.",
+ "ai_err_model": "Nama model AI tidak ditemui. Semak GEMINI_MODEL dalam .streamlit/secrets.toml.",
+ "ai_err_timeout": "AI terlalu lama menjawab. Sila cuba lagi.",
+ "ai_err_net": "Tidak dapat mencapai perkhidmatan AI. Semak sambungan internet anda.",
+ "ai_err_empty": "AI memberi jawapan kosong. Sila cuba lagi.",
+ "ai_chat_title": "Tanya soalan susulan",
+ "ai_chat_hint": "Tanya tentang keputusan ini...",
+ "ai_use_sample": "Sertakan sampel yang dipilih dalam soalan",
+ "ai_remaining": "Baki {n} daripada {total} soalan percuma",
+ "ai_clear": "Padam perbualan",
+ "ai_limit": "Soalan percuma dalam sesi ini sudah habis. Pelan berbayar akan menghapuskan had ini."
+}

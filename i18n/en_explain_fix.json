@@ -1,0 +1,3 @@
+{
+ "ex_sat_note": "The model is almost completely sure about this sample, so each single feature changes the result by a negligible amount. Grey bars are such negligible effects (under 0.1 percentage points) and should not be read as findings. For more informative explanations, pick a sample the model got wrong or is less sure about."
+}

@@ -105,3 +105,18 @@ def summary():
     ds = db.list_datasets()
     return {"datasets": ds, "n_datasets": len(ds), "n_samples": sum(d["n_rows"] for d in ds),
             "n_runs": db.count("runs"), "best_acc": db.best_holdout_accuracy()}
+
+def template_df(kind):
+    from models import templates as T
+    return T.build(kind)
+
+
+def template_csv(kind, blank=False):
+    from models import templates as T
+    return T.to_csv(T.blank(kind) if blank else template_df(kind))
+
+
+@st.cache_data(show_spinner=False, ttl=3600, max_entries=8)
+def fetch_online_sample(dataset_id):
+    from models import templates as T
+    return T.fetch_hf_rows(dataset_id)

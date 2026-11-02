@@ -1,0 +1,3 @@
+{
+ "ex_sat_note": "Model hampir sepenuhnya yakin pada sampel ini, sehingga pengaruh tiap fitur terhadap hasil sangat kecil. Batang abu-abu menandakan pengaruh yang dapat diabaikan (di bawah 0,1 poin persentase) dan tidak perlu dibaca sebagai temuan. Untuk penjelasan yang lebih informatif, pilih sampel yang diprediksi salah atau yang keyakinannya lebih rendah."
+}

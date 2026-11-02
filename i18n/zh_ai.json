@@ -1,0 +1,21 @@
+{
+ "ai_title": "AI 助手",
+ "ai_note": "解释和回答由 AI（Google Gemini）生成，可能有错误。只会发送结果的简短摘要，绝不发送你的原始数据。",
+ "ai_summary_title": "自动解释",
+ "ai_badge": "由 AI 生成",
+ "ai_thinking": "AI 正在思考...",
+ "ai_fallback_note": "AI 解释暂不可用，已改为显示基于规则的解释。",
+ "ai_err_nokey": "AI 助手尚未设置：请在 .streamlit/secrets.toml 中添加 GEMINI_API_KEY。已改为显示基于规则的解释。",
+ "ai_err_quota": "免费 AI 额度暂时用完，请几分钟后再试。",
+ "ai_err_key": "AI 密钥被拒绝，请检查 .streamlit/secrets.toml 中的 GEMINI_API_KEY。",
+ "ai_err_model": "找不到 AI 模型名称，请检查 .streamlit/secrets.toml 中的 GEMINI_MODEL。",
+ "ai_err_timeout": "AI 回答超时，请重试。",
+ "ai_err_net": "无法连接 AI 服务，请检查网络连接。",
+ "ai_err_empty": "AI 返回了空回答，请重试。",
+ "ai_chat_title": "继续提问",
+ "ai_chat_hint": "询问有关这些结果的问题...",
+ "ai_use_sample": "在提问中包含所选样本",
+ "ai_remaining": "剩余 {n} / {total} 个免费问题",
+ "ai_clear": "清除对话",
+ "ai_limit": "本次会话的免费问题已用完。付费套餐将取消此限制。"
+}

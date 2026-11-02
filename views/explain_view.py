@@ -9,7 +9,18 @@ from controllers import pipeline_controller as pc
 from i18n import t
 from models import explain as E
 from views.components import apply_pending, hero, page_link, show, style
+from views.ai_panel import render_ai_panel
 from views.models_view import _label
+
+
+def _fmt_pct(p):
+    """Persentase tanpa pembulatan menyesatkan: makin dekat 100, makin banyak desimal."""
+    v = float(p) * 100
+    if v >= 100.0:
+        return "100%"
+    if v >= 99.9:
+        return f"{v:.4f}%"
+    return f"{v:.1f}%"
 
 
 def render_explain():
@@ -74,6 +85,7 @@ def render_explain():
     if mode == "wrong":
         if not wrong:
             st.success(t("ex_no_wrong"))
+            render_ai_panel(rid, model, run, share, classes, feats, builtin, src)
             return
         row = st.selectbox(t("ex_sample"), wrong, key=f"ex_row_w_{rid}_{model}")
     else:
@@ -82,7 +94,7 @@ def render_explain():
     k1, k2, k3 = st.columns(3)
     k1.metric(t("ex_true"), true)
     k2.metric(t("ex_pred"), pred)
-    k3.metric(t("ex_conf"), f"{proba.max() * 100:.1f}%")
+    k3.metric(t("ex_conf"), _fmt_pct(proba.max()))
     if true != pred:
         st.warning(t("ex_wrong_note"))
 
@@ -99,9 +111,14 @@ def render_explain():
     st.write(t("ex_loc_pos", c=pred, f=", ".join(pos)) if pos else t("ex_loc_none"))
     if neg:
         st.write(t("ex_loc_neg", f=", ".join(neg)))
-    st.caption(t("ex_local_note"))
+        st.caption(t("ex_local_note"))
 
-    # ---------- 3. AI opsional ----------
+    # ---------- 3. AI Assistant (Gemini) ----------
+    sample = {"true": true, "pred": pred, "conf": _fmt_pct(proba.max()),
+              "effects": [(f, float(v)) for f, v in eff[::-1].head(10).items()]}
+    render_ai_panel(rid, model, run, share, classes, feats, builtin, src, sample)
+
+    # ---------- 4. AI opsional (salin prompt) ----------
     with st.expander(t("ex_ai_title")):
         st.markdown(t("ex_ai_help"))
         lines = "\n".join(f"- {f}: {share[f] * 100:.1f}%" for f in share.sort_values(ascending=False).index[:8])

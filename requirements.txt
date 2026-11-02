@@ -7,3 +7,4 @@ lightgbm
 xgboost
 imbalanced-learn
 shap
+google-genai

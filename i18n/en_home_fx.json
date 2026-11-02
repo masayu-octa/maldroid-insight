@@ -1,0 +1,5 @@
+{
+ "lp_prog_title": "Your progress",
+ "lp_prog_val": "{n} of {total} steps ready",
+ "lp_ws_chart": "Class distribution per dataset"
+}

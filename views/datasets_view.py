@@ -10,6 +10,7 @@ from controllers import dataset_controller as ctl
 from i18n import t
 from models import datasets as M
 from views.components import (apply_pending, chip, class_colors, flash, hero, level, show, style)
+from views.dataset_guide import render_guide
 
 
 def _goto_add():
@@ -155,6 +156,7 @@ def _add():
                     st.error(t(e.key, **e.kw))
                 else:
                     _done(new_id, s["name"])
+    render_guide()
 
     st.markdown(f"#### {t('ad_upload_title')}")
     st.caption(t("ad_upload_hint"))

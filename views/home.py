@@ -1,58 +1,165 @@
-"""Halaman Dashboard: tujuan alat, alur kerja, ringkasan sesi, glosarium."""
-import pandas as pd
+"""Halaman Dashboard (landing page): judul, tujuan, cara memakai, panduan tiap fitur, ringkasan ruang kerja."""
+import plotly.graph_objects as go
 import streamlit as st
 
 from controllers import dataset_controller as ctl
 from i18n import t
-from views.components import chip, hero, page_link
+from views.components import chip, class_colors, page_link, show, style
 
-STEPS = [("1", "datasets"), ("2", "datasets"), ("3", "pipeline"),
-         ("4", "models"), ("5", "explain"), ("6", "predict")]
-GLOSSARY = ["log1p", "scaler", "smote", "leak", "holdout", "cv", "shap"]
+FEATURES = ["datasets", "pipeline", "models", "cross", "explain", "predict", "sus"]
+FEATURE_ICON = {"datasets": ":material/dataset:", "pipeline": ":material/tune:",
+                "models": ":material/leaderboard:", "cross": ":material/compare_arrows:",
+                "explain": ":material/manage_search:", "predict": ":material/online_prediction:",
+                "sus": ":material/rate_review:"}
+# (kunci langkah, halaman tujuan, butuh: None | "ds" | "run" | "two")
+STEPS = [("prep", "datasets", None), ("add", "datasets", None), ("check", "datasets", "ds"),
+         ("run", "pipeline", "ds"), ("compare", "models", "run"), ("cross", "cross", "two"),
+         ("explain", "explain", "run"), ("predict", "predict", "run"), ("sus", "sus", None)]
+ACCENT = {"datasets": "#254F73", "pipeline": "#3C7A5A", "models": "#C9983A", "cross": "#6B7FB0",
+          "explain": "#B0583A", "predict": "#2F8F9D", "sus": "#8A5FA8"}
+GLOSSARY = ["log1p", "scaler", "smote", "leak", "holdout", "cv", "perm", "f1m"]
+FAQ = ["install", "format", "toogood", "which", "av", "store"]
 
 
 def render_home():
-    hero(t("nav_home"), t("hm_sub"))
     s = ctl.summary()
+    _landing()
+    _pillars()
+    _progress(s)
+    _how_to(s)
+    _feature_cards()
+    _feature_guide()
+    _pipeline_section()
+    _workspace(s)
+    _help_sections()
 
-    k1, k2, k3, k4 = st.columns(4)
-    k1.metric(t("hm_kpi_datasets"), s["n_datasets"])
-    k2.metric(t("hm_kpi_samples"), f"{s['n_samples']:,}")
-    k3.metric(t("hm_kpi_runs"), s["n_runs"])
-    k4.metric(t("hm_kpi_best"), f"{s['best_acc'] * 100:.2f}%" if s["best_acc"] else "-")
 
-    st.markdown(f"### {t('hm_what_title')}")
+def _landing():
+    st.markdown(
+        f'<div class="landing"><div class="landing-kicker">{t("lp_kicker")}</div>'
+        f'<div class="landing-title">MalDroid Insight</div><p>{t("lp_tagline")}</p></div>',
+        unsafe_allow_html=True)
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        page_link("datasets", t("lp_cta_start"), ":material/upload_file:")
+    with c2:
+        page_link("pipeline", t("lp_cta_run"), ":material/tune:")
+    with c3:
+        page_link("sus", t("lp_cta_rate"), ":material/rate_review:")
     st.markdown(f'<div class="lead">{t("hm_what")}</div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="prov">{t("hm_pipe")}</div>', unsafe_allow_html=True)
 
-    st.markdown(f"### {t('hm_flow_title')}")
-    has_ds, has_run = s["n_datasets"] > 0, s["n_runs"] > 0
-    ready = {"1": has_ds, "2": has_ds, "3": has_run, "4": has_run, "5": has_run, "6": has_run}
-    for row in (STEPS[:3], STEPS[3:]):
-        cols = st.columns(3)
-        for col, (n, page) in zip(cols, row):
-            with col, st.container(border=True):
-                st.markdown(f'<span class="stepno">{n}</span><b>{t(f"hm_s{n}_t")}</b> '
-                            + chip(t("hm_done") if ready[n] else t("hm_todo"),
-                                   "ok" if ready[n] else "todo"), unsafe_allow_html=True)
-                st.caption(t(f"hm_s{n}_d"))
-                page_link(page, t("hm_open"))
-    st.caption(t("hm_cross"))
-    page_link("cross", t("nav_cross"))
 
-    st.markdown(f"### {t('hm_mine_title')}")
+def _pillars():
+    cards = "".join(
+        f'<div class="pillar"><b>{t(f"lp_p{n}_t")}</b><div>{t(f"lp_p{n}_d")}</div></div>'
+        for n in ("1", "2", "3"))
+    st.markdown(f'<div class="pillars">{cards}</div>', unsafe_allow_html=True)
+
+
+def _done_flags(s):
+    ds, run = s["n_datasets"] > 0, s["n_runs"] > 0
+    return {"prep": ds, "add": ds, "check": ds, "run": run, "compare": run,
+            "cross": s["n_datasets"] > 1, "explain": run, "predict": run, "sus": False}
+
+
+def _progress(s):
+    flags = _done_flags(s)
+    n, total = sum(flags.values()), len(flags)
+    pct = int(n / total * 100)
+    st.markdown(
+        f'<div class="prog"><div class="prog-top"><b>{t("lp_prog_title")}</b>'
+        f'<span>{t("lp_prog_val", n=n, total=total)}</span></div>'
+        f'<div class="prog-bar"><div class="prog-fill" style="width:{pct}%"></div></div></div>',
+        unsafe_allow_html=True)
+
+
+def _feature_cards():
+    cards = "".join(
+        f'<div class="fcard" style="--c:{ACCENT[f]}"><div class="fcard-name">{t("nav_" + f)}</div>'
+        f'<div class="fcard-desc">{t(f"lp_{f}_what")}</div></div>' for f in FEATURES)
+    st.markdown(f'<div class="fcards">{cards}</div>', unsafe_allow_html=True)
+
+
+def _how_to(s):
+    st.markdown(f"### {t('lp_how_title')}")
+    st.caption(t("lp_how_sub"))
+    ready = {None: None, "ds": s["n_datasets"] > 0, "run": s["n_runs"] > 0, "two": s["n_datasets"] > 1}
+    for i, (key, page, need) in enumerate(STEPS, 1):
+        with st.container(border=True):
+            st.markdown(f'<span class="stepmark c-{page}"></span>', unsafe_allow_html=True)
+            left, right = st.columns([6, 2])
+            badge = ""
+            if ready[need] is not None:
+                badge = " " + chip(t("hm_done") if ready[need] else t("hm_todo"), "ok" if ready[need] else "todo")
+            left.markdown(
+                f'<span class="stepno" style="background:{ACCENT[page]}">{i}</span>'
+                f'<b>{t("lp_step_" + key + "_t")}</b>{badge}', unsafe_allow_html=True)
+            left.caption(t("lp_step_" + key + "_d"))
+            with right:
+                page_link(page, t("hm_open"), FEATURE_ICON[page])
+
+
+def _feature_guide():
+    st.markdown(f"### {t('lp_feat_title')}")
+    st.caption(t("lp_feat_sub"))
+    tabs = st.tabs([t("nav_" + f) for f in FEATURES])
+    for tab, f in zip(tabs, FEATURES):
+        with tab:
+            st.markdown(f'<div class="fhead" style="--c:{ACCENT[f]}">{t(f"lp_{f}_what")}</div>',
+                        unsafe_allow_html=True)
+            c1, c2 = st.columns(2)
+            with c1:
+                st.markdown(f"**{t('lp_h_do')}**")
+                st.markdown(t(f"lp_{f}_do"))
+            with c2:
+                st.markdown(f"**{t('lp_h_get')}**")
+                st.markdown(t(f"lp_{f}_get"))
+            st.info(t(f"lp_{f}_note"))
+            page_link(f, t("lp_goto", name=t("nav_" + f)), FEATURE_ICON[f])
+
+
+def _pipeline_section():
+    st.markdown(f"### {t('lp_pipe_title')}")
+    st.markdown(t("hm_pipe"))
+    steps = ["log1p", "RobustScaler", "SMOTE", "Model", "Evaluate"]
+    chips = '<span class="arrow">→</span>'.join(f'<span class="step">{n}</span>' for n in steps)
+    st.markdown(f'<div class="steps">{chips}</div>', unsafe_allow_html=True)
+    for n in ("log1p", "scaler", "smote", "model", "eval"):
+        st.markdown(f"- **{t('pl_step_' + n + '_t')}**: {t('pl_step_' + n)}")
+    st.markdown(f"**{t('lp_fastfull_t')}**: {t('lp_fastfull_d')}")
+
+
+def _workspace(s):
+    st.markdown(f"### {t('lp_ws_title')}")
+    best = f"{s['best_acc'] * 100:.2f}%" if s["best_acc"] else "-"
+    kpis = [(t("hm_kpi_datasets"), s["n_datasets"], "#254F73"),
+            (t("hm_kpi_samples"), f"{s['n_samples']:,}", "#2F8F9D"),
+            (t("hm_kpi_runs"), s["n_runs"], "#C9983A"), (t("hm_kpi_best"), best, "#3C7A5A")]
+    cards = "".join(f'<div class="kpi" style="--c:{c}"><div class="kpi-l">{l}</div><div class="kpi-v">{v}</div></div>'
+                    for l, v, c in kpis)
+    st.markdown(f'<div class="kpis">{cards}</div>', unsafe_allow_html=True)
     if not s["datasets"]:
         st.info(t("hm_none"))
         page_link("datasets", t("hm_start"))
-    else:
-        st.dataframe(pd.DataFrame({
-            t("ds_col_name"): [d["name"] for d in s["datasets"]],
-            t("ds_col_source"): [t("src_" + d["source"]) for d in s["datasets"]],
-            t("ds_col_rows"): [d["n_rows"] for d in s["datasets"]],
-            t("ds_col_feats"): [d["n_features"] for d in s["datasets"]],
-            t("ds_col_classes"): [len(d["class_counts"]) for d in s["datasets"]],
-        }), hide_index=True)
+        return
+    classes = sorted({c for d in s["datasets"] for c in d["class_counts"]})
+    colors = class_colors(classes)
+    names = [d["name"] for d in s["datasets"]]
+    fig = go.Figure()
+    for c in classes:
+        fig.add_trace(go.Bar(name=c, y=names, x=[d["class_counts"].get(c, 0) for d in s["datasets"]],
+                             orientation="h", marker_color=colors[c]))
+    fig.update_layout(barmode="stack", title=t("lp_ws_chart"), height=max(200, 70 * len(names) + 90))
+    show(style(fig, legend=True))
 
+
+def _help_sections():
+    st.markdown(f"### {t('lp_good_title')}")
+    st.markdown(t("lp_good"))
+    with st.expander(t("lp_faq_title")):
+        for q in FAQ:
+            st.markdown(f"**{t('lp_faq_' + q + '_q')}**")
+            st.markdown(t("lp_faq_" + q + "_a"))
     with st.expander(t("hm_gloss_title")):
         for g in GLOSSARY:
             st.markdown(f"**{t(f'gl_{g}_t')}**: {t(f'gl_{g}_d')}")

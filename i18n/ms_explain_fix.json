@@ -1,0 +1,3 @@
+{
+ "ex_sat_note": "Model hampir sepenuhnya yakin tentang sampel ini, jadi pengaruh setiap ciri terhadap keputusan sangat kecil. Bar kelabu menandakan pengaruh yang boleh diabaikan (di bawah 0.1 mata peratusan) dan tidak perlu dibaca sebagai penemuan. Untuk penerangan yang lebih bermaklumat, pilih sampel yang diramal salah atau yang keyakinannya lebih rendah."
+}
