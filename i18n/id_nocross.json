@@ -1,0 +1,3 @@
+{
+ "lp_good": "- Ini alat riset dan belajar, bukan pengganti antivirus.\n- Akurasi tinggi bergantung pada datasetnya. Model yang sangat baik di satu dataset bisa buruk di dataset lain, jadi anggap hasil hanya berlaku untuk dataset yang kamu pakai.\n- Dataset, run, dan model disimpan di folder storage/ pada komputer yang menjalankan aplikasi.\n- Run pertama pada dataset besar bisa lama; mulai dengan Cepat dan jumlah baris terbatas."
+}

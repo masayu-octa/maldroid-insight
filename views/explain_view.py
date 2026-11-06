@@ -1,4 +1,5 @@
-"""Halaman Explainability: fitur apa yang diandalkan model, dan mengapa satu sampel diputuskan begitu."""
+"""Halaman Explainability: fitur apa yang diandalkan model, mengapa satu sampel diputuskan begitu,
+lalu perbandingan model di bagian bawah."""
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
@@ -10,7 +11,7 @@ from i18n import t
 from models import explain as E
 from views.components import apply_pending, hero, page_link, show, style
 from views.ai_panel import render_ai_panel
-from views.models_view import _label
+from views.models_view import _compare, _label, _single
 
 
 def _fmt_pct(p):
@@ -36,6 +37,8 @@ def render_explain():
     names = cc.dataset_names()
     ids = [r["id"] for r in runs]
     by_id = {r["id"]: r for r in runs}
+    if st.session_state.get("_ex_pref") in ids:
+        st.session_state["ex_run"] = st.session_state.pop("_ex_pref")
     if st.session_state.get("ex_run") not in ids:
         st.session_state["ex_run"] = ids[0]
     c1, c2 = st.columns([3, 1])
@@ -45,6 +48,34 @@ def render_explain():
     feats = run["summary"]["features"]
     classes = run["summary"]["classes"]
 
+    options = ["explain", "compare"]
+    view = st.segmented_control(t("ex_view"), options, default="explain", key="ex_tab",
+                                format_func=lambda k: t("ex_tab_" + k),
+                                label_visibility="collapsed")
+    if view == "compare":
+        _comparison(rid)
+    else:
+        _explain_body(rid, run, model, feats, classes)
+
+
+def _comparison(rid):
+    """Bagian bawah halaman: perbandingan model (dulu halaman Model Comparison)."""
+    st.divider()
+    st.markdown(f"## {t('ex_cmp_title')}")
+    st.caption(t("ex_cmp_help"))
+    runs = cc.all_runs()
+    names = cc.dataset_names()
+    ids = [r["id"] for r in runs]
+    by_id = {r["id"]: r for r in runs}
+    st.session_state["mc_run"] = rid
+    tab1, tab2 = st.tabs([t("mc_tab_run"), t("mc_tab_cmp")])
+    with tab1:
+        _single(pc.load_run(rid))
+    with tab2:
+        _compare(ids, by_id, names)
+
+
+def _explain_body(rid, run, model, feats, classes):
     # ---------- 1. fitur yang diandalkan ----------
     st.markdown(f"### {t('ex_global_title')}")
     st.caption(t("ex_global_help"))

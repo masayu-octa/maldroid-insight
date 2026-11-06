@@ -25,6 +25,8 @@ def render_pipeline():
         return
 
     by_id = {d["id"]: d for d in datasets}
+    if st.session_state.get("_pl_pref") in by_id:
+        st.session_state["pl_ds"] = st.session_state.pop("_pl_pref")
     ds_id = st.selectbox(t("dataset"), list(by_id), key="pl_ds", format_func=lambda i: by_id[i]["name"])
     meta = by_id[ds_id]
     df, feats, _ = datasets_ctl.load(ds_id)
@@ -68,7 +70,7 @@ def render_pipeline():
         folds = st.slider(t("pl_folds"), 3, 10, 5, key="pl_folds", disabled=not do_cv)
         use_smote = st.toggle(t("pl_smote"), value=True, key="pl_smote")
         speed = st.radio(t("pl_speed"), ["fast", "full"], horizontal=True, key="pl_speed",
-                         format_func=lambda k: t("pl_" + k))
+                         format_func=lambda k: t("pl_" + k), help=t("pl_speed_help"))
         total = meta["n_rows"]
         if total > 2000:
             n_used = int(st.number_input(t("pl_maxrows"), min_value=2000, max_value=total,
@@ -88,10 +90,6 @@ def render_pipeline():
         st.warning(t("pl_leak_hint", f=top.index[0], s=float(top.iloc[0])))
 
     _steps(steps_box, use_smote)
-    steps = [("log1p", True), ("RobustScaler", True), ("SMOTE", use_smote), ("Model", True), ("Evaluate", True)]
-    chips = '<span class="arrow">→</span>'.join(
-        f'<span class="step{"" if on else " off"}">{n}</span>' for n, on in steps)
-    st.markdown(f'<div class="steps">{chips}</div>', unsafe_allow_html=True)
 
     if st.button(t("pl_run"), type="primary", key="pl_go"):
         if not models:
@@ -117,9 +115,11 @@ def render_pipeline():
             else:
                 st.session_state["_flash"] = t("pl_done", id=run_id)
                 st.session_state["_pending"] = {"pl_view": run_id, "mc_run": run_id}
+                st.session_state["_ex_pref"] = run_id
                 st.rerun()
 
     _history(ds_id)
+
 
 def _steps(box, use_smote):
     """Baris langkah pipeline di bagian atas halaman (SMOTE dicoret bila dimatikan)."""
@@ -127,7 +127,8 @@ def _steps(box, use_smote):
     chips = '<span class="arrow">→</span>'.join(
         f'<span class="step{"" if on else " off"}">{n}</span>' for n, on in steps)
     box.markdown(f'<div class="steps">{chips}</div>', unsafe_allow_html=True)
-    
+
+
 def _history(ds_id):
     runs = ctl.list_runs(ds_id)
     st.markdown(f"### {t('pl_res_title')}")
@@ -138,13 +139,14 @@ def _history(ds_id):
     by_id = {r["id"]: r for r in runs}
     if st.session_state.get("pl_view") not in ids:
         st.session_state["pl_view"] = ids[0]
-    c1, c2 = st.columns([3, 1])
+    c1, c2 = st.columns([3, 2])
     rid = c1.selectbox(t("pl_view_run"), ids, key="pl_view",
                        format_func=lambda i: f"#{i} · {by_id[i]['created_at']} · "
                                              f"{t('pl_sc_' + by_id[i]['config']['scenario'], n=by_id[i]['summary']['n_features'])}")
+    st.session_state["_ex_pref"] = rid
     with c2:
         st.write("")
-        page_link("models", t("pl_open_cmp"), ":material/leaderboard:")
+        page_link("explain", t("pl_open_explain"), ":material/manage_search:")
     show_run(ctl.load_run(rid))
 
     with st.expander(t("pl_hist", n=len(runs))):

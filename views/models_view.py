@@ -148,10 +148,6 @@ def _compare(ids, by_id, names):
     key = st.radio(t("mc_metric"), ["ho_acc", "ho_f1m", "cv_acc", "cv_f1m"], horizontal=True, key="mc_metric",
                    format_func=lambda k: t("mc_m_" + k))
     df, runs = cc.pivot(pick, key)
-    ds = {by_id[i]["dataset_id"] for i in pick}
-    modes = {by_id[i]["config"]["mode"] for i in pick}
-    if len(ds) > 1 or len(modes) > 1:
-        st.warning(t("mc_not_comparable"))
     cols = [f"#{i}" for i in pick]
     if df[cols].isna().all().all():
         st.info(t("mc_no_metric"))

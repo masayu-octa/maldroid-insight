@@ -71,7 +71,8 @@ h2,h3,h5{color:#141F52;}
 .prog-bar{height:12px;background:#E6DEC9;border-radius:999px;overflow:hidden;}
 .prog-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#254F73,#2F8F9D,#3C7A5A);
       transition:width .6s ease;}
-.fcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin:6px 0 22px;}
+.fcards{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin:6px 0 22px;}
+.fcards .fcard{flex:0 1 calc(33.333% - 10px);min-width:230px;box-sizing:border-box;}
 .fcard{background:linear-gradient(180deg,#FFFFFF 0%,#F8F2E4 100%);border:1px solid #E0D5BE;
       border-top:5px solid var(--c);border-radius:12px;padding:14px 16px;
       transition:transform .18s ease,box-shadow .18s ease;}
@@ -104,3 +105,44 @@ h2,h3,h5{color:#141F52;}
 .pillars .pillar:nth-child(1){border-top-color:#254F73;}
 .pillars .pillar:nth-child(2){border-top-color:#3C7A5A;}
 .pillars .pillar:nth-child(3){border-top-color:#C9983A;}
+/* Tombol menu judul di tengah */
+.st-key-cta [data-testid="stElementContainer"],.st-key-cta [data-testid="stPageLink"]{display:flex;justify-content:center;width:100%;}
+.st-key-cta [data-testid="stPageLink"] a{justify-content:center;background:#FFFFFF;border:1.5px solid #254F73;
+  border-radius:999px;padding:8px 22px;font-weight:600;color:#141F52;transition:transform .15s ease,box-shadow .15s ease,background .15s ease;}
+.st-key-cta [data-testid="stPageLink"] a:hover{background:#254F73;color:#FFFFFF;transform:translateY(-2px);
+  box-shadow:0 6px 14px rgba(20,31,82,.18);}
+.st-key-cta [data-testid="stPageLink"] a:hover *{color:#FFFFFF !important;}
+
+/* Alur pipeline interaktif */
+.flow{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;margin:14px 0 8px;}
+.flow-node{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;background:#FFFFFF;
+  border:2px solid var(--c);color:var(--c);font-weight:700;transition:transform .18s ease,box-shadow .18s ease,background .18s ease;}
+.flow-node .no{width:24px;height:24px;border-radius:50%;background:var(--c);color:#FFFFFF;display:inline-flex;
+  align-items:center;justify-content:center;font-size:.8rem;}
+.flow-node:hover{transform:translateY(-3px);box-shadow:0 8px 16px rgba(20,31,82,.18);}
+.flow-node.on{background:var(--c);color:#FFFFFF;transform:scale(1.07);box-shadow:0 8px 16px rgba(20,31,82,.2);}
+.flow-node.on .no{background:#FFFFFF;color:var(--c);}
+.flow-arrow{color:#7A8DB3;font-size:1.3rem;}
+.st-key-flowpick [data-testid="stElementContainer"]{display:flex;justify-content:center;width:100%;}
+.st-key-flowpick [data-testid="stButtonGroup"]{display:flex;justify-content:center;flex-wrap:wrap;width:auto;}
+.flowinfo{border-left:6px solid var(--c);background:linear-gradient(90deg,#F3EBDA,#FBF7EC);border-radius:10px;
+  padding:12px 18px;margin:8px 0 16px;}
+.flowinfo b{color:var(--c);font-size:1.02rem;}
+.flowinfo p{margin:4px 0 0;color:#2B3566;}
+/* Teks rata kiri-kanan (justify) di seluruh aplikasi */
+[data-testid="stMarkdownContainer"] p,
+[data-testid="stMarkdownContainer"] li,
+[data-testid="stCaptionContainer"],
+[data-testid="stAlert"] p,
+[data-testid="stAlert"] li,
+[data-testid="stExpander"] p,
+[data-testid="stChatMessage"] p,
+[data-testid="stChatMessage"] li,
+.landing p,.lead,.pillar div,.fcard-desc,.flowinfo p,.fhead,.prov,.hero p{
+  text-align:justify;text-justify:inter-word;hyphens:auto;-webkit-hyphens:auto;}
+/* Pengecualian: elemen pendek/terpusat tetap seperti semula */
+.flow-arrow,[data-testid="stMetric"] *,[data-testid="stButton"] *,[data-testid="stPageLink"] *,
+[data-testid="stTab"] *,[data-testid="stSelectbox"] *,[data-testid="stRadio"] label *,
+.kpi *,.prog-top *{text-align:inherit;hyphens:manual;}
+/* Kartu langkah: tinggi sama dalam satu baris */
+.st-key-steps2 [data-testid="stVerticalBlock"]:has(> [data-testid="stElementContainer"] .stepmark){min-height:172px;}

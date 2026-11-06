@@ -1,0 +1,16 @@
+{
+ "ex_cmp_title": "Perbandingan model",
+ "ex_cmp_help": "Setelah membaca penjelasan di atas, bandingkan model-modelnya. Lihat satu run secara rinci, atau pilih beberapa run untuk melihat bagaimana suatu perubahan (fitur, SMOTE, mode label) menggeser tiap model.",
+ "ex_sub": "Baca mengapa model memutuskan demikian, lalu bandingkan model-modelnya di bagian bawah.",
+ "lp_step_explain_t": "Pahami dan bandingkan",
+ "lp_step_explain_d": "Lihat fitur yang diandalkan model dan alasan keputusannya, lalu bandingkan model dan run di halaman yang sama.",
+ "lp_explain_what": "Menjelaskan hasil lebih dulu (fitur yang diandalkan model dan alasan model memutuskan demikian untuk satu sampel), lalu membandingkan model dan run tersimpan di bagian bawah.",
+ "lp_explain_do": "- Pilih run dan model.\n- Baca grafik kepentingan dan ringkasan bahasa sederhana.\n- Pilih satu sampel uji (atau hanya yang salah) untuk melihat fitur yang mendorong keputusan, dan tanyakan ke asisten AI.\n- Gulir ke Perbandingan model: periksa satu run, atau pilih dua run atau lebih, misalnya dengan dan tanpa kolom mencurigakan.",
+ "lp_explain_get": "- Peringkat fitur yang berlaku untuk semua model (kepentingan permutasi).\n- Peringatan bila satu fitur mendominasi, yang bisa berarti kebocoran.\n- Penjelasan per sampel: batang hijau mendukung keputusan, batang merah menentangnya.\n- Model mana yang terbaik, kelas apa yang tertukar, dan pengaruh satu perubahan pada tiap model.",
+ "lp_explain_note": "Kepentingan menunjukkan apa yang dipakai model, bukan penyebab malware. Selisih yang lebih kecil dari simpangan baku antar fold tidak bermakna, dan run hanya dibandingkan pada dataset dan mode label yang sama.",
+ "lp_faq_which_a": "Jalankan beberapa lalu bandingkan di bagian bawah Penjelasan Model, pada Perbandingan model. Jika selisihnya lebih kecil dari simpangan baku antar fold, model-model itu praktis setara.",
+ "lp_fastfull_t": "Cepat vs Teliti",
+ "lp_fastfull_d": "Cepat memakai pohon dan iterasi lebih sedikit (misalnya 150 sampai 200 pohon) sehingga hasil keluar dalam hitungan detik atau menit, cocok untuk uji coba. Teliti memakai lebih banyak (misalnya 700 sampai 1000 pohon dan laju belajar lebih rendah), lebih lama, dan untuk hasil akhir. Pengaturan persisnya ada di Pipeline Runner, pada Perbedaan Cepat dan Teliti pada tiap model.",
+ "lp_pipeline_note": "Cepat memakai pohon lebih sedikit untuk uji coba; Teliti memakai lebih banyak untuk hasil akhir. Ubah satu hal per run agar run bisa dibandingkan.",
+ "lp_pipeline_do": "- Pilih dataset, set fitur (semua, keluarkan sebagian kolom, atau hanya kolom yang sama dengan dataset lain) dan mode label (kelas asli atau Benign vs Malware).\n- Pilih model (maksimal 10) dan evaluasi: hold-out 80:20, validasi silang k-fold berstrata, atau keduanya.\n- Aktifkan atau matikan SMOTE, pilih pelatihan Cepat atau Teliti, lalu jalankan."
+}

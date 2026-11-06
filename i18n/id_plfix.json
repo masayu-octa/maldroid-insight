@@ -1,0 +1,8 @@
+{
+ "pl_speed": "Ketelitian pelatihan",
+ "pl_fast": "Cepat",
+ "pl_full": "Teliti",
+ "pl_speed_help": "Cepat melatih dengan jumlah pohon/iterasi lebih sedikit, jadi selesai lebih cepat. Teliti memakai lebih banyak, lebih lama, dan biasanya sedikit lebih akurat. Pakai Cepat untuk mencoba-coba dan Teliti untuk hasil akhir.",
+ "pl_hyper_title": "Perbedaan Cepat dan Teliti pada tiap model",
+ "pl_open_explain": "Jelaskan run ini (Explainability)"
+}

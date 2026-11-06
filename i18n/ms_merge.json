@@ -1,0 +1,16 @@
+{
+ "ex_cmp_title": "Perbandingan model",
+ "ex_cmp_help": "Selepas membaca penerangan di atas, bandingkan model-model. Lihat satu larian secara terperinci, atau pilih beberapa larian untuk melihat bagaimana perubahan (ciri, SMOTE, mod label) menggerakkan setiap model.",
+ "ex_sub": "Baca mengapa model membuat keputusan sedemikian, kemudian bandingkan model di bahagian bawah.",
+ "lp_step_explain_t": "Fahami dan bandingkan",
+ "lp_step_explain_d": "Lihat ciri yang diandalkan model dan sebab keputusannya, kemudian bandingkan model dan larian pada halaman yang sama.",
+ "lp_explain_what": "Menerangkan keputusan dahulu (ciri yang diandalkan model dan sebab model membuat keputusan untuk satu sampel), kemudian membandingkan model dan larian tersimpan di bahagian bawah.",
+ "lp_explain_do": "- Pilih larian dan model.\n- Baca carta kepentingan dan ringkasan bahasa mudah.\n- Pilih satu sampel ujian (atau hanya yang salah) untuk melihat ciri yang mendorong keputusan, dan tanya pembantu AI.\n- Tatal ke Perbandingan model: periksa satu larian, atau pilih dua larian atau lebih, contohnya dengan dan tanpa lajur mencurigakan.",
+ "lp_explain_get": "- Kedudukan ciri yang sah untuk semua model (kepentingan pilih atur).\n- Amaran apabila satu ciri mendominasi, yang mungkin bermaksud kebocoran.\n- Penerangan setiap sampel: bar hijau menyokong keputusan, bar merah menentangnya.\n- Model terbaik, kelas yang keliru, dan kesan satu perubahan pada setiap model.",
+ "lp_explain_note": "Kepentingan menunjukkan apa yang digunakan model, bukan punca malware. Perbezaan yang lebih kecil daripada sisihan piawai antara fold tidak bermakna, dan larian hanya dibandingkan pada set data dan mod label yang sama.",
+ "lp_faq_which_a": "Jalankan beberapa dan bandingkan di bahagian bawah Explainability, di bawah Perbandingan model. Jika perbezaan lebih kecil daripada sisihan piawai antara fold, model-model itu hampir setara.",
+ "lp_fastfull_t": "Pantas vs Teliti",
+ "lp_fastfull_d": "Pantas menggunakan lebih sedikit pokok dan lelaran (contohnya 150 hingga 200 pokok) supaya keputusan siap dalam beberapa saat atau minit, sesuai untuk percubaan. Teliti menggunakan lebih banyak (contohnya 700 hingga 1000 pokok dan kadar belajar lebih rendah), lebih lama dan untuk keputusan akhir. Tetapan tepat disenaraikan dalam Pipeline Runner, pada Perbezaan Pantas dan Teliti bagi setiap model.",
+ "lp_pipeline_note": "Pantas menggunakan lebih sedikit pokok untuk percubaan; Teliti menggunakan lebih banyak untuk keputusan akhir. Ubah satu perkara setiap larian supaya larian boleh dibandingkan.",
+ "lp_pipeline_do": "- Pilih set data, set ciri (semua, kecualikan sebahagian lajur, atau hanya lajur yang sama dengan set data lain) dan mod label (kelas asal atau Benign vs Malware).\n- Pilih model (maksimum 10) dan penilaian: hold-out 80:20, pengesahan silang k-fold berstrata, atau kedua-duanya.\n- Hidupkan atau matikan SMOTE, pilih latihan Pantas atau Teliti, kemudian jalankan."
+}

@@ -1,0 +1,3 @@
+{
+ "lp_good": "- Ini alat penyelidikan dan pembelajaran, bukan pengganti perisian antivirus.\n- Ketepatan tinggi bergantung pada set data. Model yang cemerlang pada satu set data boleh lemah pada yang lain, jadi anggap keputusan hanya sah untuk set data yang anda guna.\n- Set data, run dan model disimpan dalam folder storage/ pada komputer yang menjalankan aplikasi.\n- Run pertama pada set data besar boleh mengambil masa; mulakan dengan Pantas dan bilangan baris terhad."
+}

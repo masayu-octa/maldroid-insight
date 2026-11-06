@@ -1,0 +1,3 @@
+{
+ "lp_good": "- This is a research and learning tool, not a replacement for antivirus software.\n- High accuracy depends on the dataset. A model that is excellent on one dataset may do poorly on another, so treat results as valid for the dataset you used.\n- Datasets, runs and models are stored in the storage/ folder of the computer that runs the app.\n- The first run on a large dataset can take a while; start with Quick and a limited number of rows."
+}

@@ -1,0 +1,8 @@
+{
+ "pl_speed": "Training thoroughness",
+ "pl_fast": "Quick",
+ "pl_full": "Thorough",
+ "pl_speed_help": "Quick trains with fewer trees/iterations, so it finishes sooner. Thorough uses more, takes longer and is usually slightly more accurate. Use Quick to try things out and Thorough for your final results.",
+ "pl_hyper_title": "What Quick and Thorough change for each model",
+ "pl_open_explain": "Explain this run (Explainability)"
+}

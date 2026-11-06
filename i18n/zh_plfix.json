@@ -1,0 +1,8 @@
+{
+ "pl_speed": "训练精细程度",
+ "pl_fast": "快速",
+ "pl_full": "精细",
+ "pl_speed_help": "快速使用较少的树/迭代次数，完成得更快。精细使用更多，耗时更长，通常精度略高。试验时用快速，最终结果用精细。",
+ "pl_hyper_title": "快速与精细对各模型的具体差异",
+ "pl_open_explain": "解释此次运行（Explainability）"
+}

@@ -1,0 +1,16 @@
+{
+ "ex_cmp_title": "Model comparison",
+ "ex_cmp_help": "After reading the explanation above, compare the models. Look at one run in detail, or select several runs to see how a change (features, SMOTE, label mode) moved each model.",
+ "ex_sub": "Read why the models decided what they did, then compare the models below.",
+ "lp_step_explain_t": "Understand and compare",
+ "lp_step_explain_d": "See which features a model relies on and why it decided what it did, then compare the models and runs on the same page.",
+ "lp_explain_what": "Explains the results first (which features a model relies on, and why it decided what it did for a sample), then compares the models and saved runs below.",
+ "lp_explain_do": "- Pick a run and a model.\n- Read the importance chart and the plain-language summary.\n- Pick a test sample (or only the mistakes) to see which features pushed the decision, and ask the AI assistant.\n- Scroll down to Model comparison: inspect one run, or select two or more runs, for example with and without a suspicious column.",
+ "lp_explain_get": "- A feature ranking that works for every model (permutation importance).\n- A warning when one feature dominates, which may mean leakage.\n- A per-sample explanation: green bars support the decision, red bars oppose it.\n- Which model is best, which classes each model confuses, and the effect of a single change on every model.",
+ "lp_explain_note": "Importance shows what the model uses, not what causes malware. Differences smaller than the standard deviation across folds are not meaningful, and runs should be compared on the same dataset and label mode only.",
+ "lp_faq_which_a": "Run several and compare them at the bottom of Explainability, under Model comparison. If the differences are smaller than the standard deviation across folds, the models are practically equal.",
+ "lp_fastfull_t": "Quick vs Thorough",
+ "lp_fastfull_d": "Quick uses fewer trees and iterations (for example 150 to 200 trees) so results arrive in seconds or minutes, which suits trials. Thorough uses more (for example 700 to 1000 trees and a lower learning rate), takes longer and is meant for final results. The exact settings are listed in Pipeline Runner, under What Quick and Thorough change for each model.",
+ "lp_pipeline_note": "Quick uses fewer trees for fast trials; Thorough uses more for final results. Change one thing per run so the runs can be compared.",
+ "lp_pipeline_do": "- Choose a dataset, the feature set (all, exclude some columns, or only columns shared with another dataset) and the label mode (original classes or Benign vs Malware).\n- Select models (up to 10) and the evaluation: hold-out 80:20, stratified k-fold cross-validation, or both.\n- Turn SMOTE on or off, choose Quick or Thorough training, then run."
+}

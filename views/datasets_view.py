@@ -9,7 +9,7 @@ import streamlit as st
 from controllers import dataset_controller as ctl
 from i18n import t
 from models import datasets as M
-from views.components import (apply_pending, chip, class_colors, flash, hero, level, show, style)
+from views.components import (apply_pending, chip, class_colors, flash, hero, level, page_link, show, style)
 from views.dataset_guide import render_guide
 
 
@@ -21,7 +21,10 @@ def render_datasets():
     apply_pending()
     hero(t("nav_datasets"), t("ds_sub"))
     flash()
-    view = st.radio(t("view"), ["mine", "add"], horizontal=True, key="ds_view",
+    if st.session_state.pop("_next_pipeline", False):
+        st.success(t("ds_next"))
+        page_link("pipeline", t("ds_next_btn"), ":material/tune:")
+    view = st.radio(t("view"), ["add", "mine"], horizontal=True, key="ds_view",
                     format_func=lambda k: t("ds_view_" + k), label_visibility="collapsed")
     if view == "mine":
         _mine()
@@ -41,6 +44,8 @@ def _mine():
     ds_id = st.selectbox(t("ds_pick"), ids, key="ds_pick",
                          format_func=lambda i: by_id[i]["name"])
     meta = by_id[ds_id]
+    st.session_state["_pl_pref"] = ds_id
+    page_link("pipeline", t("ds_next_btn"), ":material/tune:")
     df, feats, info = ctl.load(ds_id)
 
     counts = df["Label"].value_counts()
@@ -137,6 +142,8 @@ def _mine():
 
 # ---------------- tambah dataset ----------------
 def _add():
+    render_guide()
+
     st.markdown(f"#### {t('ad_example_title')}")
     st.caption(t("ad_example_note"))
     status = ctl.example_status()
@@ -156,8 +163,7 @@ def _add():
                     st.error(t(e.key, **e.kw))
                 else:
                     _done(new_id, s["name"])
-    render_guide()
-
+    
     st.markdown(f"#### {t('ad_upload_title')}")
     st.caption(t("ad_upload_hint"))
     file = st.file_uploader(t("ad_file"), type=["csv"], key="ds_file")
@@ -210,5 +216,7 @@ def _add():
 
 def _done(new_id, name):
     st.session_state["_flash"] = t("ad_ok", name=name)
+    st.session_state["_next_pipeline"] = True
     st.session_state["_pending"] = {"ds_view": "mine", "ds_pick": new_id}
+    st.session_state["_pl_pref"] = new_id
     st.rerun()

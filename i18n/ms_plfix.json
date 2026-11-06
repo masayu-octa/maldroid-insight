@@ -1,0 +1,8 @@
+{
+ "pl_speed": "Ketelitian latihan",
+ "pl_fast": "Pantas",
+ "pl_full": "Teliti",
+ "pl_speed_help": "Pantas melatih dengan bilangan pokok/lelaran lebih sedikit, jadi siap lebih cepat. Teliti menggunakan lebih banyak, lebih lama dan biasanya sedikit lebih tepat. Guna Pantas untuk mencuba dan Teliti untuk keputusan akhir.",
+ "pl_hyper_title": "Perbezaan Pantas dan Teliti bagi setiap model",
+ "pl_open_explain": "Terangkan larian ini (Explainability)"
+}
