@@ -30,26 +30,21 @@ def local_effects(pipe, x, ref, feats, candidates, class_idx):
     return float(base), pd.Series(delta, index=candidates)
 
 
-def narrative(importance, builtin=None):
+def narrative(importance, builtin=None, model=""):
     """Daftar (kunci_terjemahan, parameter) berisi kesimpulan dari urutan kepentingan fitur.
-    importance: Series (jumlah = 1)."""
+    importance: Series (jumlah = 1), persis nilai yang digambar di grafik (dikali 100). builtin tidak dipakai lagi."""
     imp = importance[importance > 0].sort_values(ascending=False)
-    out = []
     if imp.empty:
         return [("ex_nar_none", {})]
     top = list(imp.index[:3])
-    shares = [float(imp[c]) * 100 for c in top]
-    names = ", ".join(f"{c} ({s:.0f}%)" for c, s in zip(top, shares))
-    out.append(("ex_nar_top", {"n": len(top), "names": names}))
-    if shares[0] >= 40:
-        out.append(("ex_nar_conc", {"f": top[0], "s": shares[0]}))
-    else:
-        top5 = float(imp.head(5).sum()) * 100
-        out.append(("ex_nar_spread" if top5 < 60 else "ex_nar_top5", {"s": top5}))
-    unused = int((importance <= 0).sum())
+    names = ", ".join(f"{c} ({float(imp[c]) * 100:.1f}%)" for c in top)
+    out = [("ex_nar_top", {"m": model, "n": len(top), "names": names})]
+    share0 = float(imp[top[0]]) * 100
+    if share0 >= 40:
+        out.append(("ex_nar_conc", {"f": top[0], "s": share0}))
+    unused = [c for c in importance.index if importance[c] <= 0]
     if unused:
-        out.append(("ex_nar_unused", {"n": unused, "total": len(importance)}))
-    if builtin is not None and len(builtin):
-        a, b = set(imp.index[:5]), set(builtin.sort_values(ascending=False).index[:5])
-        out.append(("ex_nar_agree" if len(a & b) >= 3 else "ex_nar_differ", {"k": len(a & b)}))
+        out.append(("ex_nar_unused" if len(unused) <= 5 else "ex_nar_unused_more",
+                    {"n": len(unused), "total": len(importance), "ex": ", ".join(unused[:5]),
+                     "rest": len(unused) - 5}))
     return out

@@ -86,3 +86,18 @@ def misclassified(run_id, model):
     """Indeks sampel uji yang salah diprediksi model."""
     X, y = load_test(run_id)
     return [int(i) for i in np.where(load_pipe(run_id, model).predict(X) != y)[0]]
+
+@st.cache_data(show_spinner=False, max_entries=12)
+def misclassified_table(run_id, model):
+    """Tabel baris uji yang salah diprediksi: nomor baris, kelas asli, kelas prediksi, keyakinan (%)."""
+    run = pc.load_run(run_id)
+    classes = run["summary"]["classes"]
+    X, y = load_test(run_id)
+    rows = misclassified(run_id, model)
+    if not rows:
+        return pd.DataFrame(columns=["row", "true", "pred", "conf"])
+    proba = load_pipe(run_id, model).predict_proba(X[rows])
+    return pd.DataFrame({"row": rows,
+                         "true": [classes[int(y[r])] for r in rows],
+                         "pred": [classes[int(i)] for i in np.argmax(proba, axis=1)],
+                         "conf": np.round(proba.max(axis=1) * 100, 1)})

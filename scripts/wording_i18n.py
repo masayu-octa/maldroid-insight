@@ -1,0 +1,63 @@
+import json, pathlib
+T = {
+"en": dict(
+ ex_nar_top="Based on this run, {m} relies most on {n} features: {names}. Each percentage is that feature's share of the total importance, the same values as the chart above.",
+ ex_nar_conc="One feature, {f}, carries {s:.1f}% of the total importance. If this feature is derived from the label (for example an antivirus detection score), the high accuracy may be overstated. Check it with a run that excludes it.",
+ ex_nar_unused="{n} of {total} features have no effect on the result and could be dropped: {ex}.",
+ ex_nar_unused_more="{n} of {total} features have no effect on the result and could be dropped, for example {ex}, and {rest} more.",
+ ex_axis_perm="Share of total importance (%)",
+ ex_axis_builtin="Share of total importance (%)",
+ ex_perm_note="Importance is measured by shuffling one feature at a time on held-out test data and seeing how much the model gets worse (macro F1). Each bar is that drop as a share of the total drop over all features. It is computed on up to 500 test rows.",
+ ex_local_title="Inspect your data, row by row",
+ ex_local_help="Choose a data row to check whether the model predicted it correctly and to spot which features may indicate malicious behaviour. Each bar shows how much confidence in the predicted class drops when that feature is replaced by a typical value.",
+ ex_pick="Data to inspect", ex_pick_any="Any data row", ex_pick_wrong="Only wrongly predicted data ({n})", ex_sample="Data row number",
+ ex_wrong_hint="These {n} test rows were predicted wrongly. Click a row to see which features pushed the model to its decision (the first row is shown by default).",
+ gd_tab_err="Anomalous and inconsistent data",
+ gd_err_intro="These are the messages you may see when a dataset is anomalous, inconsistent or unusable, why they appear, and how to fix them."),
+"id": dict(
+ ex_nar_top="Berdasarkan run ini, {m} paling mengandalkan {n} fitur: {names}. Setiap persentase adalah porsi fitur itu terhadap total kepentingan, nilainya sama dengan grafik di atas.",
+ ex_nar_conc="Satu fitur, yaitu {f}, memegang {s:.1f}% dari total kepentingan. Jika fitur ini turunan dari label (misalnya skor deteksi antivirus), akurasi tinggi bisa menyesatkan. Periksa dengan run yang mengeluarkan fitur itu.",
+ ex_nar_unused="{n} dari {total} fitur tidak berpengaruh pada hasil dan bisa dibuang: {ex}.",
+ ex_nar_unused_more="{n} dari {total} fitur tidak berpengaruh pada hasil dan bisa dibuang, misalnya {ex}, dan {rest} lainnya.",
+ ex_axis_perm="Porsi dari total kepentingan (%)",
+ ex_axis_builtin="Porsi dari total kepentingan (%)",
+ ex_perm_note="Kepentingan diukur dengan mengacak satu fitur pada data uji lalu melihat seberapa turun kualitas model (F1 makro). Setiap batang adalah penurunan itu sebagai porsi dari total penurunan semua fitur. Dihitung pada paling banyak 500 baris data uji.",
+ ex_local_title="Periksa data Anda, baris per baris",
+ ex_local_help="Pilih satu baris data untuk memeriksa apakah model memprediksinya dengan benar dan fitur mana yang mungkin menandakan perilaku berbahaya. Tiap batang menunjukkan seberapa turun keyakinan pada kelas prediksi bila fitur itu diganti dengan nilai tipikal.",
+ ex_pick="Data yang diperiksa", ex_pick_any="Baris data mana saja", ex_pick_wrong="Hanya data yang salah diprediksi ({n})", ex_sample="Nomor baris data",
+ ex_wrong_hint="Ada {n} baris data uji yang salah diprediksi. Klik satu baris untuk melihat fitur mana yang mendorong keputusan model (secara bawaan baris pertama yang ditampilkan).",
+ gd_tab_err="Data anomali dan tidak konsisten",
+ gd_err_intro="Berikut pesan yang mungkin muncul saat dataset anomali, tidak konsisten, atau tidak bisa dipakai, penyebabnya, dan cara memperbaikinya."),
+"ms": dict(
+ ex_nar_top="Berdasarkan larian ini, {m} paling bergantung pada {n} ciri: {names}. Setiap peratusan ialah bahagian ciri itu daripada jumlah kepentingan, nilainya sama dengan carta di atas.",
+ ex_nar_conc="Satu ciri, iaitu {f}, memegang {s:.1f}% daripada jumlah kepentingan. Jika ciri ini terbitan label (contohnya skor pengesanan antivirus), ketepatan tinggi boleh mengelirukan. Semak dengan larian yang mengecualikan ciri itu.",
+ ex_nar_unused="{n} daripada {total} ciri tidak memberi kesan pada keputusan dan boleh dibuang: {ex}.",
+ ex_nar_unused_more="{n} daripada {total} ciri tidak memberi kesan pada keputusan dan boleh dibuang, contohnya {ex}, dan {rest} lagi.",
+ ex_axis_perm="Bahagian daripada jumlah kepentingan (%)",
+ ex_axis_builtin="Bahagian daripada jumlah kepentingan (%)",
+ ex_perm_note="Kepentingan diukur dengan mengacak satu ciri pada data ujian dan melihat sejauh mana prestasi model merosot (F1 makro). Setiap bar ialah kemerosotan itu sebagai bahagian daripada jumlah kemerosotan semua ciri. Dikira pada paling banyak 500 baris data ujian.",
+ ex_local_title="Periksa data anda, baris demi baris",
+ ex_local_help="Pilih satu baris data untuk menyemak sama ada model meramalnya dengan betul dan ciri mana yang mungkin menandakan tingkah laku berbahaya. Setiap bar menunjukkan sejauh mana keyakinan pada kelas ramalan turun apabila ciri itu diganti dengan nilai tipikal.",
+ ex_pick="Data yang diperiksa", ex_pick_any="Mana-mana baris data", ex_pick_wrong="Hanya data yang salah diramal ({n})", ex_sample="Nombor baris data",
+ ex_wrong_hint="Terdapat {n} baris data ujian yang salah diramal. Klik satu baris untuk melihat ciri mana yang mendorong keputusan model (secara lalai baris pertama dipaparkan).",
+ gd_tab_err="Data anomali dan tidak konsisten",
+ gd_err_intro="Berikut mesej yang mungkin muncul apabila set data anomali, tidak konsisten atau tidak boleh digunakan, sebabnya, dan cara membetulkannya."),
+"zh": dict(
+ ex_nar_top="根据本次运行，{m} 最依赖这 {n} 个特征：{names}。每个百分比是该特征占总重要性的份额，与上方图表中的数值一致。",
+ ex_nar_conc="单个特征 {f} 占总重要性的 {s:.1f}%。如果该特征由标签派生（例如杀毒软件的检测分数），高准确率可能被夸大。请用排除该特征的运行来检查。",
+ ex_nar_unused="{n}/{total} 个特征对结果没有影响，可以删除：{ex}。",
+ ex_nar_unused_more="{n}/{total} 个特征对结果没有影响，可以删除，例如 {ex}，另有 {rest} 个。",
+ ex_axis_perm="占总重要性的份额（%）",
+ ex_axis_builtin="占总重要性的份额（%）",
+ ex_perm_note="重要性的测量方法是在留出的测试数据上逐个打乱特征，观察模型变差的程度（宏 F1）。每根柱子是该下降量占所有特征总下降量的份额。最多使用 500 行测试数据计算。",
+ ex_local_title="逐行检查你的数据",
+ ex_local_help="选择一行数据，检查模型是否预测正确，并找出哪些特征可能表明恶意行为。每根柱子表示当该特征被替换为典型值时，对预测类别的置信度下降了多少。",
+ ex_pick="要检查的数据", ex_pick_any="任意一行数据", ex_pick_wrong="仅预测错误的数据（{n}）", ex_sample="数据行号",
+ ex_wrong_hint="共有 {n} 行测试数据预测错误。点击某一行即可查看哪些特征推动了模型的判断（默认显示第一行）。",
+ gd_tab_err="异常与不一致的数据",
+ gd_err_intro="当数据集异常、不一致或无法使用时，可能出现以下提示，说明出现原因和修复方法。"),
+}
+out = pathlib.Path(__file__).resolve().parent.parent / "i18n"
+for k, v in T.items():
+    (out / f"{k}_wording.json").write_text(json.dumps(v, ensure_ascii=False, indent=1), encoding="utf-8")
+print("ok")

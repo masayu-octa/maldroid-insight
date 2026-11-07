@@ -1,0 +1,18 @@
+{
+ "ex_nar_top": "Berdasarkan larian ini, {m} paling bergantung pada {n} ciri: {names}. Setiap peratusan ialah bahagian ciri itu daripada jumlah kepentingan, nilainya sama dengan carta di atas.",
+ "ex_nar_conc": "Satu ciri, iaitu {f}, memegang {s:.1f}% daripada jumlah kepentingan. Jika ciri ini terbitan label (contohnya skor pengesanan antivirus), ketepatan tinggi boleh mengelirukan. Semak dengan larian yang mengecualikan ciri itu.",
+ "ex_nar_unused": "{n} daripada {total} ciri tidak memberi kesan pada keputusan dan boleh dibuang: {ex}.",
+ "ex_nar_unused_more": "{n} daripada {total} ciri tidak memberi kesan pada keputusan dan boleh dibuang, contohnya {ex}, dan {rest} lagi.",
+ "ex_axis_perm": "Bahagian daripada jumlah kepentingan (%)",
+ "ex_axis_builtin": "Bahagian daripada jumlah kepentingan (%)",
+ "ex_perm_note": "Kepentingan diukur dengan mengacak satu ciri pada data ujian dan melihat sejauh mana prestasi model merosot (F1 makro). Setiap bar ialah kemerosotan itu sebagai bahagian daripada jumlah kemerosotan semua ciri. Dikira pada paling banyak 500 baris data ujian.",
+ "ex_local_title": "Periksa data anda, baris demi baris",
+ "ex_local_help": "Pilih satu baris data untuk menyemak sama ada model meramalnya dengan betul dan ciri mana yang mungkin menandakan tingkah laku berbahaya. Setiap bar menunjukkan sejauh mana keyakinan pada kelas ramalan turun apabila ciri itu diganti dengan nilai tipikal.",
+ "ex_pick": "Data yang diperiksa",
+ "ex_pick_any": "Mana-mana baris data",
+ "ex_pick_wrong": "Hanya data yang salah diramal ({n})",
+ "ex_sample": "Nombor baris data",
+ "ex_wrong_hint": "Terdapat {n} baris data ujian yang salah diramal. Klik satu baris untuk melihat ciri mana yang mendorong keputusan model (secara lalai baris pertama dipaparkan).",
+ "gd_tab_err": "Data anomali dan tidak konsisten",
+ "gd_err_intro": "Berikut mesej yang mungkin muncul apabila set data anomali, tidak konsisten atau tidak boleh digunakan, sebabnya, dan cara membetulkannya."
+}

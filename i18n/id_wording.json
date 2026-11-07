@@ -1,0 +1,18 @@
+{
+ "ex_nar_top": "Berdasarkan run ini, {m} paling mengandalkan {n} fitur: {names}. Setiap persentase adalah porsi fitur itu terhadap total kepentingan, nilainya sama dengan grafik di atas.",
+ "ex_nar_conc": "Satu fitur, yaitu {f}, memegang {s:.1f}% dari total kepentingan. Jika fitur ini turunan dari label (misalnya skor deteksi antivirus), akurasi tinggi bisa menyesatkan. Periksa dengan run yang mengeluarkan fitur itu.",
+ "ex_nar_unused": "{n} dari {total} fitur tidak berpengaruh pada hasil dan bisa dibuang: {ex}.",
+ "ex_nar_unused_more": "{n} dari {total} fitur tidak berpengaruh pada hasil dan bisa dibuang, misalnya {ex}, dan {rest} lainnya.",
+ "ex_axis_perm": "Porsi dari total kepentingan (%)",
+ "ex_axis_builtin": "Porsi dari total kepentingan (%)",
+ "ex_perm_note": "Kepentingan diukur dengan mengacak satu fitur pada data uji lalu melihat seberapa turun kualitas model (F1 makro). Setiap batang adalah penurunan itu sebagai porsi dari total penurunan semua fitur. Dihitung pada paling banyak 500 baris data uji.",
+ "ex_local_title": "Periksa data Anda, baris per baris",
+ "ex_local_help": "Pilih satu baris data untuk memeriksa apakah model memprediksinya dengan benar dan fitur mana yang mungkin menandakan perilaku berbahaya. Tiap batang menunjukkan seberapa turun keyakinan pada kelas prediksi bila fitur itu diganti dengan nilai tipikal.",
+ "ex_pick": "Data yang diperiksa",
+ "ex_pick_any": "Baris data mana saja",
+ "ex_pick_wrong": "Hanya data yang salah diprediksi ({n})",
+ "ex_sample": "Nomor baris data",
+ "ex_wrong_hint": "Ada {n} baris data uji yang salah diprediksi. Klik satu baris untuk melihat fitur mana yang mendorong keputusan model (secara bawaan baris pertama yang ditampilkan).",
+ "gd_tab_err": "Data anomali dan tidak konsisten",
+ "gd_err_intro": "Berikut pesan yang mungkin muncul saat dataset anomali, tidak konsisten, atau tidak bisa dipakai, penyebabnya, dan cara memperbaikinya."
+}

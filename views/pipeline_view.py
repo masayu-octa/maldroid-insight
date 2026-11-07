@@ -8,6 +8,20 @@ from i18n import t
 from models import pipeline as P
 from views.components import apply_pending, flash, hero, page_link
 
+FLOW = [("log1p", "#254F73"), ("RobustScaler", "#2F8F9D"), ("SMOTE", "#C9983A"),
+        ("Model", "#3C7A5A"), ("Evaluate", "#8A5FA8")]
+
+_FLOW_CSS = """<style>
+.pf{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;margin:10px 0 14px;}
+.pf-node{display:inline-flex;align-items:center;gap:8px;padding:8px 18px 8px 10px;border-radius:999px;background:#FFFFFF;
+  border:2px solid var(--c);color:var(--c);font-weight:700;transition:transform .18s ease,box-shadow .18s ease,opacity .18s ease;}
+.pf-node .no{width:24px;height:24px;border-radius:50%;background:var(--c);color:#FFFFFF;display:inline-flex;
+  align-items:center;justify-content:center;font-size:.8rem;}
+.pf-node:hover{transform:translateY(-3px);box-shadow:0 8px 16px rgba(20,31,82,.18);}
+.pf-node.off{opacity:.45;text-decoration:line-through;filter:grayscale(.6);}
+.pf-arrow{color:#7A8DB3;font-size:1.3rem;}
+</style>"""
+
 
 def render_pipeline():
     apply_pending()
@@ -122,11 +136,14 @@ def render_pipeline():
 
 
 def _steps(box, use_smote):
-    """Baris langkah pipeline di bagian atas halaman (SMOTE dicoret bila dimatikan)."""
-    steps = [("log1p", True), ("RobustScaler", True), ("SMOTE", use_smote), ("Model", True), ("Evaluate", True)]
-    chips = '<span class="arrow">→</span>'.join(
-        f'<span class="step{"" if on else " off"}">{n}</span>' for n, on in steps)
-    box.markdown(f'<div class="steps">{chips}</div>', unsafe_allow_html=True)
+    """Alur pipeline di bagian atas halaman: sama dengan Dashboard; SMOTE dicoret dan memudar bila dimatikan."""
+    nodes = []
+    for i, (name, color) in enumerate(FLOW, 1):
+        off = name == "SMOTE" and not use_smote
+        nodes.append(f'<span class="pf-node{" off" if off else ""}" style="--c:{color}">'
+                     f'<span class="no">{i}</span>{name}</span>')
+    box.markdown(_FLOW_CSS + '<div class="pf">' + '<span class="pf-arrow">&#10140;</span>'.join(nodes) + "</div>",
+                 unsafe_allow_html=True)
 
 
 def _history(ds_id):

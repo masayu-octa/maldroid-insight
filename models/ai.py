@@ -3,6 +3,7 @@ Hanya RINGKASAN hasil yang dikirim ke Gemini (bukan data mentah)."""
 
 LANG_NAMES = {"EN": "English", "ID": "Bahasa Indonesia", "MS": "Bahasa Melayu", "ZH": "Simplified Chinese"}
 TIMEOUT_MS = 90000
+FALLBACK_MODELS = ["gemini-3.5-flash-lite"]   # dicoba bila model utama sibuk / tidak tersedia / lambat
 MAX_HISTORY = 8          # pesan terakhir yang ikut dikirim ke model
 
 SYSTEM = (
@@ -53,16 +54,21 @@ def _client(key):
 
 def _call(key, model, contents, system):
     client, types = _client(key)
-    try:
-        resp = client.models.generate_content(
-            model=model, contents=contents, config=types.GenerateContentConfig(system_instruction=system))
-    except Exception as e:                                  # pesan ramah, detail teknis disimpan
-        raise AIError(_classify(e), str(e)[:300]) from e
-    text = (getattr(resp, "text", None) or "").strip()
-    if not text:
-        raise AIError("ai_err_empty")
-    return text
-
+    last = None
+    for m in [model] + [x for x in FALLBACK_MODELS if x != model]:
+        try:
+            resp = client.models.generate_content(
+                model=m, contents=contents, config=types.GenerateContentConfig(system_instruction=system))
+        except Exception as e:                              # pesan ramah, detail teknis disimpan
+            last = AIError(_classify(e), str(e)[:300])
+            if last.key in ("ai_err_busy", "ai_err_model", "ai_err_timeout"):
+                continue                                    # coba model cadangan
+            raise last from e
+        text = (getattr(resp, "text", None) or "").strip()
+        if not text:
+            raise AIError("ai_err_empty")
+        return text
+    raise last
 
 def _classify(e):
     s = str(e)

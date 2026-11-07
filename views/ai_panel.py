@@ -71,7 +71,7 @@ def render_ai_panel(rid, model, run, share, classes, feats, builtin, src, sample
                 elif err == "ai_err_nokey":
                     st.info(t("ai_err_nokey"))
                 st.caption(t("ai_fallback_note"))
-                for key, kw in E.narrative(share, builtin if src == "perm" else None):
+                for key, kw in E.narrative(share, model=model):
                     st.markdown(f"- {t(key, **kw)}")
         for role, msg in history:
             with st.chat_message(role):

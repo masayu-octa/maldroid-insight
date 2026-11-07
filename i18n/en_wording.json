@@ -1,0 +1,18 @@
+{
+ "ex_nar_top": "Based on this run, {m} relies most on {n} features: {names}. Each percentage is that feature's share of the total importance, the same values as the chart above.",
+ "ex_nar_conc": "One feature, {f}, carries {s:.1f}% of the total importance. If this feature is derived from the label (for example an antivirus detection score), the high accuracy may be overstated. Check it with a run that excludes it.",
+ "ex_nar_unused": "{n} of {total} features have no effect on the result and could be dropped: {ex}.",
+ "ex_nar_unused_more": "{n} of {total} features have no effect on the result and could be dropped, for example {ex}, and {rest} more.",
+ "ex_axis_perm": "Share of total importance (%)",
+ "ex_axis_builtin": "Share of total importance (%)",
+ "ex_perm_note": "Importance is measured by shuffling one feature at a time on held-out test data and seeing how much the model gets worse (macro F1). Each bar is that drop as a share of the total drop over all features. It is computed on up to 500 test rows.",
+ "ex_local_title": "Inspect your data, row by row",
+ "ex_local_help": "Choose a data row to check whether the model predicted it correctly and to spot which features may indicate malicious behaviour. Each bar shows how much confidence in the predicted class drops when that feature is replaced by a typical value.",
+ "ex_pick": "Data to inspect",
+ "ex_pick_any": "Any data row",
+ "ex_pick_wrong": "Only wrongly predicted data ({n})",
+ "ex_sample": "Data row number",
+ "ex_wrong_hint": "These {n} test rows were predicted wrongly. Click a row to see which features pushed the model to its decision (the first row is shown by default).",
+ "gd_tab_err": "Anomalous and inconsistent data",
+ "gd_err_intro": "These are the messages you may see when a dataset is anomalous, inconsistent or unusable, why they appear, and how to fix them."
+}

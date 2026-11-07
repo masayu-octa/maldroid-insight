@@ -95,13 +95,14 @@ def _explain_body(rid, run, model, feats, classes):
         values = raw * 100
     total = float(raw.sum())
     share = raw / total if total > 0 else raw
+    values = share * 100  
     top = values.sort_values(ascending=False).head(15)[::-1]
     fig = go.Figure(go.Bar(x=top.values, y=list(top.index), orientation="h", marker_color="#3A6EA5"))
     fig.update_layout(xaxis_title=axis, height=max(280, 26 * len(top) + 90))
     show(style(fig))
 
     st.markdown(f"##### {t('ex_plain_title')}")
-    for key, kw in E.narrative(share, builtin if src == "perm" else None):
+    for key, kw in E.narrative(share, model=model):
         st.markdown(f"- {t(key, **kw)}")
     if src == "perm":
         st.caption(t("ex_perm_note"))
@@ -118,7 +119,13 @@ def _explain_body(rid, run, model, feats, classes):
             st.success(t("ex_no_wrong"))
             render_ai_panel(rid, model, run, share, classes, feats, builtin, src)
             return
-        row = st.selectbox(t("ex_sample"), wrong, key=f"ex_row_w_{rid}_{model}")
+        tbl = ctl.misclassified_table(rid, model)
+        tbl.columns = [t("ex_sample"), t("ex_true"), t("ex_pred"), t("ex_conf") + " (%)"]
+        st.caption(t("ex_wrong_hint", n=len(tbl)))
+        ev = st.dataframe(tbl, hide_index=True, on_select="rerun", selection_mode="single-row",
+                          key=f"ex_tbl_{rid}_{model}", height=min(300, 38 + 35 * len(tbl)))
+        picked = ev.selection.rows
+        row = int(tbl.iloc[picked[0], 0]) if picked else int(tbl.iloc[0, 0])
     else:
         row = int(st.number_input(t("ex_sample"), 0, len(y) - 1, 0, key=f"ex_row_{rid}_{model}"))
     true, pred, proba = ctl.sample_view(rid, model, row)
