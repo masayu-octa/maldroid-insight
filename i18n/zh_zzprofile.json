@@ -1,0 +1,17 @@
+{
+ "pi_btn": "套餐信息",
+ "pi_title": "套餐与使用限制",
+ "pi_col_feat": "项目",
+ "pi_col_guest": "访客",
+ "pi_col_user": "账户",
+ "pi_datasets": "可保存的数据集",
+ "pi_runs": "可保存的运行",
+ "pi_mb": "文件大小上限",
+ "pi_rows": "每次运行的行数",
+ "pi_keep": "数据保存时间",
+ "pi_forever": "永久",
+ "pi_ai": "预测与 AI 聊天",
+ "pi_yes": "是",
+ "pi_no": "否",
+ "pi_pro": "我们正在规划限制更高的付费套餐。目前所有注册账户均免费。"
+}

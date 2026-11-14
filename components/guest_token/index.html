@@ -1,0 +1,27 @@
+<!doctype html>
+<html><body><script>
+// Komponen tak terlihat: menyimpan token acak tamu di localStorage browser dan mengirimnya ke Python.
+function post(type, data) {
+  window.parent.postMessage(Object.assign({isStreamlitMessage: true, type: type}, data || {}), "*");
+}
+function token() {
+  try {
+    var t = localStorage.getItem("mi_guest");
+    if (t && /^[0-9a-f]{32}$/.test(t)) return t;
+  } catch (e) {}
+  var a = new Uint8Array(16);
+  crypto.getRandomValues(a);
+  var n = Array.from(a, function (b) { return b.toString(16).padStart(2, "0"); }).join("");
+  try { localStorage.setItem("mi_guest", n); } catch (e) {}
+  return n;
+}
+var sent = false;
+window.addEventListener("message", function (e) {
+  if (e.data && e.data.type === "streamlit:render" && !sent) {
+    sent = true;
+    post("streamlit:setComponentValue", {value: token(), dataType: "json"});
+  }
+});
+post("streamlit:componentReady", {apiVersion: 1});
+post("streamlit:setFrameHeight", {height: 0});
+</script></body></html>

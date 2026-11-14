@@ -1,0 +1,17 @@
+{
+ "pi_btn": "Maklumat pelan",
+ "pi_title": "Pelan dan had penggunaan",
+ "pi_col_feat": "Ciri",
+ "pi_col_guest": "Tetamu",
+ "pi_col_user": "Akaun",
+ "pi_datasets": "Set data disimpan",
+ "pi_runs": "Larian disimpan",
+ "pi_mb": "Saiz fail maks.",
+ "pi_rows": "Baris setiap larian",
+ "pi_keep": "Data disimpan selama",
+ "pi_forever": "Kekal",
+ "pi_ai": "Ramalan dan sembang AI",
+ "pi_yes": "Ya",
+ "pi_no": "Tidak",
+ "pi_pro": "Pelan berbayar dengan had lebih tinggi sedang dirancang. Buat masa ini semua akaun berdaftar adalah percuma."
+}

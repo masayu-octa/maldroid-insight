@@ -1,0 +1,15 @@
+{
+ "nav_col_data": "Data",
+ "nav_col_models": "Model",
+ "nav_col_use": "Pakai & nilai",
+ "nd_datasets_mine": "Lihat dan periksa dataset yang sudah kamu tambahkan.",
+ "nd_datasets_add": "Unggah CSV lalu pilih kolom label dan fiturnya.",
+ "nd_pipeline": "Latih dan bandingkan model dengan pipeline bebas kebocoran.",
+ "nd_explain_main": "Lihat fitur apa yang menentukan keputusan, dan tanya asisten AI.",
+ "nd_compare": "Bandingkan model berdampingan pada data yang sama.",
+ "nd_predict": "Klasifikasikan sampel baru dengan model yang sudah dilatih.",
+ "nd_sus": "Nilai seberapa mudah alat ini dipakai.",
+ "lock_title": "Masuk untuk memakai fitur ini",
+ "lock_text": "Fitur ini gratis, tetapi butuh akun agar dataset dan hasilmu tetap milikmu.",
+ "lock_back": "Kembali ke Dashboard"
+}

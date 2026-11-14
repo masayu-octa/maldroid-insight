@@ -1,0 +1,10 @@
+{
+ "guest_note": "Kamu memakai aplikasi sebagai tamu. Dataset dan hasilmu hanya terlihat di browser ini dan dihapus otomatis setelah {h} jam. Buat akun gratis agar tersimpan permanen.",
+ "ad_err_limit_guest": "Tamu hanya bisa menyimpan maksimal {n} dataset. Hapus satu dulu, atau buat akun gratis untuk ruang lebih.",
+ "ad_err_limit_user": "Kamu hanya bisa menyimpan maksimal {n} dataset. Hapus satu dulu untuk menambah yang baru.",
+ "ad_err_size_guest": "File ini lebih besar dari {mb} MB, batas untuk tamu. Buat akun gratis untuk batas lebih besar.",
+ "ad_err_size_user": "File ini lebih besar dari {mb} MB, batas unggahan.",
+ "pl_err_runs_guest": "Tamu hanya bisa menyimpan maksimal {n} run. Hapus run lama dulu, atau buat akun gratis untuk ruang lebih.",
+ "pl_err_runs_user": "Kamu hanya bisa menyimpan maksimal {n} run. Hapus run lama dulu.",
+ "auth_claimed": "Data tamumu sudah pindah ke akunmu: {d} dataset, {r} run."
+}

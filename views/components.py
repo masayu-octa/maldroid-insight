@@ -46,8 +46,13 @@ def show(fig):
         st.plotly_chart(fig, use_container_width=True)
 
 
-def page_link(key, label, icon=None):
-    if key in NAV:
+def page_link(key, label, icon=None, cta=False):
+    if key not in NAV:
+        return
+    if cta:                                    
+        with st.container(key=f"cta_{key}"):
+            st.page_link(NAV[key], label=label, icon=icon)
+    else:
         st.page_link(NAV[key], label=label, icon=icon)
 
 

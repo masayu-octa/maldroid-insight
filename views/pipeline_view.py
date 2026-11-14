@@ -2,10 +2,16 @@
 import pandas as pd
 import streamlit as st
 
+import pandas as pd
+import streamlit as st
+
+from config import LIMITS
 from controllers import dataset_controller as datasets_ctl
 from controllers import pipeline_controller as ctl
 from i18n import t
+from models import db
 from models import pipeline as P
+from views.auth_view import guest_notice
 from views.components import apply_pending, flash, hero, page_link
 
 FLOW = [("log1p", "#254F73"), ("RobustScaler", "#2F8F9D"), ("SMOTE", "#C9983A"),
@@ -26,6 +32,8 @@ _FLOW_CSS = """<style>
 def render_pipeline():
     apply_pending()
     hero(t("nav_pipeline"), t("pl_sub"))
+    guest_notice()
+    flash()
     flash()
     steps_box = st.empty()
     _steps(steps_box, True)
@@ -86,11 +94,12 @@ def render_pipeline():
         speed = st.radio(t("pl_speed"), ["fast", "full"], horizontal=True, key="pl_speed",
                          format_func=lambda k: t("pl_" + k), help=t("pl_speed_help"))
         total = meta["n_rows"]
-        if total > 2000:
-            n_used = int(st.number_input(t("pl_maxrows"), min_value=2000, max_value=total,
-                                         value=min(20000, total), step=1000, key=f"pl_rows_{ds_id}"))
+        cap = min(total, LIMITS.get(db.owner_kind(), LIMITS["guest"])["rows"])
+        if cap > 2000:
+            n_used = int(st.number_input(t("pl_maxrows"), min_value=2000, max_value=cap,
+                                         value=min(20000, cap), step=1000, key=f"pl_rows_{ds_id}"))
         else:
-            n_used = total
+            n_used = cap
         st.caption(t("pl_rows_used", n=f"{n_used:,}", total=f"{total:,}"))
         with st.expander(t("pl_hyper_title")):
             st.dataframe(pd.DataFrame({
@@ -163,7 +172,10 @@ def _history(ds_id):
     st.session_state["_ex_pref"] = rid
     with c2:
         st.write("")
-        page_link("explain", t("pl_open_explain"), ":material/manage_search:")
+        _guest = st.session_state.get("user") is None
+        page_link("explain",
+                  t("pl_open_explain_lock") if _guest else t("pl_open_explain"),
+                  ":material/lock:" if _guest else ":material/manage_search:", cta=True)
     show_run(ctl.load_run(rid))
 
     with st.expander(t("pl_hist", n=len(runs))):

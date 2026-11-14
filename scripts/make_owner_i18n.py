@@ -1,0 +1,38 @@
+import json, pathlib
+root = pathlib.Path(__file__).resolve().parent.parent / "i18n"
+T = {
+"en": {"guest_note": "You are using the app as a guest. Your datasets and results are private to this browser and are deleted automatically after {h} hours. Create a free account to keep them permanently.",
+       "ad_err_limit_guest": "Guests can keep at most {n} datasets. Delete one first, or create a free account for more room.",
+       "ad_err_limit_user": "You can keep at most {n} datasets. Delete one first to add another.",
+       "ad_err_size_guest": "This file is larger than {mb} MB, the limit for guests. Create a free account for a higher limit.",
+       "ad_err_size_user": "This file is larger than {mb} MB, the upload limit.",
+       "pl_err_runs_guest": "Guests can keep at most {n} runs. Delete an old run first, or create a free account for more room.",
+       "pl_err_runs_user": "You can keep at most {n} runs. Delete an old run first.",
+       "auth_claimed": "Your guest data moved to your account: {d} dataset(s), {r} run(s)."},
+"id": {"guest_note": "Kamu memakai aplikasi sebagai tamu. Dataset dan hasilmu hanya terlihat di browser ini dan dihapus otomatis setelah {h} jam. Buat akun gratis agar tersimpan permanen.",
+       "ad_err_limit_guest": "Tamu hanya bisa menyimpan maksimal {n} dataset. Hapus satu dulu, atau buat akun gratis untuk ruang lebih.",
+       "ad_err_limit_user": "Kamu hanya bisa menyimpan maksimal {n} dataset. Hapus satu dulu untuk menambah yang baru.",
+       "ad_err_size_guest": "File ini lebih besar dari {mb} MB, batas untuk tamu. Buat akun gratis untuk batas lebih besar.",
+       "ad_err_size_user": "File ini lebih besar dari {mb} MB, batas unggahan.",
+       "pl_err_runs_guest": "Tamu hanya bisa menyimpan maksimal {n} run. Hapus run lama dulu, atau buat akun gratis untuk ruang lebih.",
+       "pl_err_runs_user": "Kamu hanya bisa menyimpan maksimal {n} run. Hapus run lama dulu.",
+       "auth_claimed": "Data tamumu sudah pindah ke akunmu: {d} dataset, {r} run."},
+"ms": {"guest_note": "Anda menggunakan aplikasi sebagai tetamu. Set data dan hasil anda hanya kelihatan dalam pelayar ini dan dipadam secara automatik selepas {h} jam. Cipta akaun percuma untuk menyimpannya secara kekal.",
+       "ad_err_limit_guest": "Tetamu hanya boleh menyimpan maksimum {n} set data. Padam satu dahulu, atau cipta akaun percuma untuk ruang lebih.",
+       "ad_err_limit_user": "Anda hanya boleh menyimpan maksimum {n} set data. Padam satu dahulu untuk menambah yang baharu.",
+       "ad_err_size_guest": "Fail ini lebih besar daripada {mb} MB, had untuk tetamu. Cipta akaun percuma untuk had lebih tinggi.",
+       "ad_err_size_user": "Fail ini lebih besar daripada {mb} MB, had muat naik.",
+       "pl_err_runs_guest": "Tetamu hanya boleh menyimpan maksimum {n} larian. Padam larian lama dahulu, atau cipta akaun percuma untuk ruang lebih.",
+       "pl_err_runs_user": "Anda hanya boleh menyimpan maksimum {n} larian. Padam larian lama dahulu.",
+       "auth_claimed": "Data tetamu anda telah berpindah ke akaun anda: {d} set data, {r} larian."},
+"zh": {"guest_note": "您正以访客身份使用本应用。您的数据集和结果只在此浏览器中可见，{h} 小时后会自动删除。创建免费账户即可永久保存。",
+       "ad_err_limit_guest": "访客最多只能保存 {n} 个数据集。请先删除一个，或创建免费账户获得更多空间。",
+       "ad_err_limit_user": "您最多只能保存 {n} 个数据集。请先删除一个再添加新的。",
+       "ad_err_size_guest": "此文件超过 {mb} MB（访客上限）。创建免费账户可获得更高上限。",
+       "ad_err_size_user": "此文件超过 {mb} MB（上传上限）。",
+       "pl_err_runs_guest": "访客最多只能保存 {n} 次运行。请先删除旧运行，或创建免费账户获得更多空间。",
+       "pl_err_runs_user": "您最多只能保存 {n} 次运行。请先删除旧运行。",
+       "auth_claimed": "您的访客数据已转入账户：{d} 个数据集，{r} 次运行。"},
+}
+for lang, d in T.items():
+    (root / f"{lang}_owner.json").write_text(json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")

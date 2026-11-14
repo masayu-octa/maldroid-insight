@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
+from config import LIMITS
 from models import artifacts
 from models import datasets as M
 from models import db
@@ -37,7 +38,14 @@ def separation_scores(ds_id):
     return pd.Series(score, index=feats).sort_values(ascending=False)
 
 
+def _limits():
+    return LIMITS.get(db.owner_kind(), LIMITS["guest"]), db.owner_kind()
+
+
 def _store(name, source, df, feats, info, label_col):
+    lim, kind = _limits()
+    if db.count("datasets") >= lim["datasets"]:
+        raise M.DatasetError("ad_err_limit_" + kind, n=lim["datasets"])
     if db.name_exists(name):
         raise M.DatasetError("ad_err_name")
     fname = M.save_frame(df)
@@ -71,6 +79,9 @@ def add_example(key):
 # ---- unggahan ----
 def read_upload(file):
     """Membaca CSV sekali per file (disimpan di sesi agar tidak dibaca ulang tiap interaksi)."""
+    lim, kind = _limits()
+    if file.size > lim["mb"] * 1024 * 1024:
+        raise M.DatasetError("ad_err_size_" + kind, mb=lim["mb"])
     key = (file.name, file.size)
     cached = st.session_state.get("_upload")
     if cached and cached[0] == key:

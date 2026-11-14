@@ -35,19 +35,28 @@ def render_home():
 
 
 def _landing():
-    st.markdown(
-        f'<div class="landing"><div class="landing-kicker">{t("lp_kicker")}</div>'
-        f'<div class="landing-title">MalDroid Insight</div><p>{t("lp_tagline")}</p></div>',
-        unsafe_allow_html=True)
-    with st.container(key="cta"):
-        c1, c2, c3 = st.columns(3)
-        with c1:
-            page_link("datasets", t("lp_cta_start"), ":material/upload_file:")
-        with c2:
-            page_link("pipeline", t("lp_cta_run"), ":material/tune:")
-        with c3:
-            page_link("sus", t("lp_cta_rate"), ":material/rate_review:")
-    st.markdown(f'<div class="lead">{t("hm_what")}</div>', unsafe_allow_html=True)
+    guest = st.session_state.get("user") is None
+    with st.container(key="landhero"):
+        st.markdown(
+            f'<div class="lh-kicker">{t("lp_kicker")}</div><div class="lh-title">MalDroid Insight</div>'
+            f'<p class="lh-sub">{t("lp_tagline")}</p>', unsafe_allow_html=True)
+        with st.container(key="landcta"):
+            c1, c2, c3 = st.columns(3)
+            if guest:
+                with c1:
+                    page_link("auth", t("lp_cta_signup"), ":material/person_add:")
+                with c2:
+                    page_link("datasets_add", t("lp_cta_start"), ":material/upload_file:")
+                with c3:
+                    page_link("sus", t("lp_cta_rate"), ":material/rate_review:")
+            else:
+                with c1:
+                    page_link("datasets_add", t("lp_cta_start"), ":material/upload_file:")
+                with c2:
+                    page_link("pipeline", t("lp_cta_run"), ":material/tune:")
+                with c3:
+                    page_link("sus", t("lp_cta_rate"), ":material/rate_review:")
+    st.markdown(f'<div class="lead lead-c">{t("hm_what")}</div>', unsafe_allow_html=True)
 
 
 def _pillars():

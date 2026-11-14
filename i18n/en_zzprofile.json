@@ -1,0 +1,17 @@
+{
+ "pi_btn": "Plans & pricing",
+ "pi_title": "Plans and limits",
+ "pi_col_feat": "Feature",
+ "pi_col_guest": "Guest",
+ "pi_col_user": "Account",
+ "pi_datasets": "Datasets kept",
+ "pi_runs": "Runs kept",
+ "pi_mb": "Max file size",
+ "pi_rows": "Rows per run",
+ "pi_keep": "Data stored for",
+ "pi_forever": "Permanent",
+ "pi_ai": "Prediction and AI chat",
+ "pi_yes": "Yes",
+ "pi_no": "No",
+ "pi_pro": "A paid plan with higher limits is planned. For now every registered account is free."
+}

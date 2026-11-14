@@ -1,0 +1,10 @@
+{
+ "guest_note": "You are using the app as a guest. Your datasets and results are private to this browser and are deleted automatically after {h} hours. Create a free account to keep them permanently.",
+ "ad_err_limit_guest": "Guests can keep at most {n} datasets. Delete one first, or create a free account for more room.",
+ "ad_err_limit_user": "You can keep at most {n} datasets. Delete one first to add another.",
+ "ad_err_size_guest": "This file is larger than {mb} MB, the limit for guests. Create a free account for a higher limit.",
+ "ad_err_size_user": "This file is larger than {mb} MB, the upload limit.",
+ "pl_err_runs_guest": "Guests can keep at most {n} runs. Delete an old run first, or create a free account for more room.",
+ "pl_err_runs_user": "You can keep at most {n} runs. Delete an old run first.",
+ "auth_claimed": "Your guest data moved to your account: {d} dataset(s), {r} run(s)."
+}

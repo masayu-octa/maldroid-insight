@@ -3,6 +3,7 @@ import time
 
 import numpy as np
 
+from config import LIMITS
 from controllers import dataset_controller as datasets_ctl
 from models import artifacts, db
 from models import pipeline as P
@@ -34,6 +35,11 @@ def feature_columns(ds_id, scenario, excluded=None, shared_with=None):
 def execute(ds_id, cfg, progress=None):
     """cfg: scenario, excluded, shared_with, mode, models, holdout, cv, folds, smote, fast, n_rows.
     Mengembalikan run_id."""
+    kind = db.owner_kind()
+    lim = LIMITS.get(kind, LIMITS["guest"])
+    if db.count("runs") >= lim["runs"]:
+        raise PipelineError("pl_err_runs_" + kind, n=lim["runs"])
+    cfg = {**cfg, "n_rows": min(cfg["n_rows"], lim["rows"])}
     df, _, _ = datasets_ctl.load(ds_id)
     cols = feature_columns(ds_id, cfg["scenario"], cfg.get("excluded"), cfg.get("shared_with"))
     X, y, classes = P.prepare_xy(df, cols, cfg["mode"])

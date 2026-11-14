@@ -1,0 +1,15 @@
+{
+ "nav_col_data": "Data",
+ "nav_col_models": "Model",
+ "nav_col_use": "Guna & nilai",
+ "nd_datasets_mine": "Lihat dan semak set data yang anda tambah.",
+ "nd_datasets_add": "Muat naik CSV dan pilih lajur label serta cirinya.",
+ "nd_pipeline": "Latih dan bandingkan model dengan saluran bebas kebocoran.",
+ "nd_explain_main": "Lihat ciri yang menentukan keputusan, dan tanya pembantu AI.",
+ "nd_compare": "Bandingkan model bersebelahan pada data yang sama.",
+ "nd_predict": "Klasifikasikan sampel baharu dengan model terlatih.",
+ "nd_sus": "Nilai betapa mudahnya alat ini digunakan.",
+ "lock_title": "Log masuk untuk menggunakan ciri ini",
+ "lock_text": "Ciri ini percuma, tetapi memerlukan akaun supaya set data dan hasil anda kekal milik anda.",
+ "lock_back": "Kembali ke Dashboard"
+}

@@ -19,3 +19,10 @@ CLASS_COLORS = {
 }
 EXTRA_COLORS = ["#5B94BD", "#C9983A", "#6B4E71", "#3C7A5A", "#8C6D46", "#4C6A92"]
 BLUE_SCALE = ["#DCE7F1", "#8FB4D1", "#3A6EA5", "#141F52"]
+
+# Data tamu dihapus otomatis setelah GUEST_TTL_HOURS jam. Batas pemakaian per jenis pemilik.
+GUEST_TTL_HOURS = 24
+LIMITS = {
+    "guest": {"datasets": 2, "runs": 5, "mb": 5, "rows": 20000},
+    "user": {"datasets": 10, "runs": 50, "mb": 50, "rows": 200000},
+}

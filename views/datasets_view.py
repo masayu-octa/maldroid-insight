@@ -9,23 +9,27 @@ import streamlit as st
 from controllers import dataset_controller as ctl
 from i18n import t
 from models import datasets as M
-from views.components import (apply_pending, chip, class_colors, flash, hero, level, page_link, show, style)
+from views.components import (NAV, apply_pending, chip, class_colors, flash, hero, level, page_link, show, style)
 from views.dataset_guide import render_guide
+from views.dataset_guide import render_guide
+from views.auth_view import guest_notice
+
+def render_mine():
+    render_datasets("mine")
 
 
-def _goto_add():
-    st.session_state["ds_view"] = "add"
+def render_add():
+    render_datasets("add")
 
 
-def render_datasets():
+def render_datasets(view=None):
     apply_pending()
     hero(t("nav_datasets"), t("ds_sub"))
+    guest_notice()
     flash()
     if st.session_state.pop("_next_pipeline", False):
         st.success(t("ds_next"))
-        page_link("pipeline", t("ds_next_btn"), ":material/tune:")
-    view = st.radio(t("view"), ["add", "mine"], horizontal=True, key="ds_view",
-                    format_func=lambda k: t("ds_view_" + k), label_visibility="collapsed")
+        page_link("pipeline", t("ds_next_btn"), ":material/tune:", cta=True)
     if view == "mine":
         _mine()
     else:
@@ -37,7 +41,7 @@ def _mine():
     datasets = ctl.list_datasets()
     if not datasets:
         st.info(t("ds_none"))
-        st.button(t("hm_start"), on_click=_goto_add, type="primary")
+        page_link("datasets_add", t("hm_start"), ":material/upload_file:")
         return
     ids = [d["id"] for d in datasets]
     by_id = {d["id"]: d for d in datasets}
@@ -45,7 +49,7 @@ def _mine():
                          format_func=lambda i: by_id[i]["name"])
     meta = by_id[ds_id]
     st.session_state["_pl_pref"] = ds_id
-    page_link("pipeline", t("ds_next_btn"), ":material/tune:")
+    page_link("pipeline", t("ds_next_btn"), ":material/tune:", cta=True)
     df, feats, info = ctl.load(ds_id)
 
     counts = df["Label"].value_counts()
@@ -217,6 +221,6 @@ def _add():
 def _done(new_id, name):
     st.session_state["_flash"] = t("ad_ok", name=name)
     st.session_state["_next_pipeline"] = True
-    st.session_state["_pending"] = {"ds_view": "mine", "ds_pick": new_id}
+    st.session_state["_pending"] = {"ds_pick": new_id}
     st.session_state["_pl_pref"] = new_id
-    st.rerun()
+    st.switch_page(NAV["datasets_mine"])

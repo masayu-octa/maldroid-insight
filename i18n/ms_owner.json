@@ -1,0 +1,10 @@
+{
+ "guest_note": "Anda menggunakan aplikasi sebagai tetamu. Set data dan hasil anda hanya kelihatan dalam pelayar ini dan dipadam secara automatik selepas {h} jam. Cipta akaun percuma untuk menyimpannya secara kekal.",
+ "ad_err_limit_guest": "Tetamu hanya boleh menyimpan maksimum {n} set data. Padam satu dahulu, atau cipta akaun percuma untuk ruang lebih.",
+ "ad_err_limit_user": "Anda hanya boleh menyimpan maksimum {n} set data. Padam satu dahulu untuk menambah yang baharu.",
+ "ad_err_size_guest": "Fail ini lebih besar daripada {mb} MB, had untuk tetamu. Cipta akaun percuma untuk had lebih tinggi.",
+ "ad_err_size_user": "Fail ini lebih besar daripada {mb} MB, had muat naik.",
+ "pl_err_runs_guest": "Tetamu hanya boleh menyimpan maksimum {n} larian. Padam larian lama dahulu, atau cipta akaun percuma untuk ruang lebih.",
+ "pl_err_runs_user": "Anda hanya boleh menyimpan maksimum {n} larian. Padam larian lama dahulu.",
+ "auth_claimed": "Data tetamu anda telah berpindah ke akaun anda: {d} set data, {r} larian."
+}

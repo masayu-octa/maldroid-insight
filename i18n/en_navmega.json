@@ -1,0 +1,15 @@
+{
+ "nav_col_data": "Data",
+ "nav_col_models": "Models",
+ "nav_col_use": "Use & evaluate",
+ "nd_datasets_mine": "Browse and inspect the datasets you added.",
+ "nd_datasets_add": "Upload a CSV and choose its label and features.",
+ "nd_pipeline": "Train and compare models with a leakage-free pipeline.",
+ "nd_explain_main": "See which features drive a decision, and ask the AI assistant.",
+ "nd_compare": "Compare models side by side on the same data.",
+ "nd_predict": "Classify new samples with a trained model.",
+ "nd_sus": "Rate how usable this tool is.",
+ "lock_title": "Log in to use this feature",
+ "lock_text": "This feature is free, but it needs an account so that your datasets and results stay yours.",
+ "lock_back": "Back to Dashboard"
+}

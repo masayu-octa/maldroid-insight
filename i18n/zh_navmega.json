@@ -1,0 +1,15 @@
+{
+ "nav_col_data": "数据",
+ "nav_col_models": "模型",
+ "nav_col_use": "使用与评价",
+ "nd_datasets_mine": "浏览并检查您添加的数据集。",
+ "nd_datasets_add": "上传 CSV 并选择标签列和特征。",
+ "nd_pipeline": "用无泄漏流程训练并比较模型。",
+ "nd_explain_main": "查看哪些特征决定了判断，并向 AI 助手提问。",
+ "nd_compare": "在同一数据上并排比较模型。",
+ "nd_predict": "用已训练的模型对新样本分类。",
+ "nd_sus": "评价这个工具好不好用。",
+ "lock_title": "登录后即可使用此功能",
+ "lock_text": "此功能免费，但需要账户，以便您的数据集和结果归您所有。",
+ "lock_back": "返回 Dashboard"
+}

@@ -23,6 +23,13 @@ def _fmt_pct(p):
         return f"{v:.4f}%"
     return f"{v:.1f}%"
 
+def _ai(*args, **kwargs):
+    """Panel AI hanya untuk user yang sudah login."""
+    if st.session_state.get("user") is None:
+        from views.auth_view import locked_card
+        locked_card()
+        return
+    render_ai_panel(*args, **kwargs)
 
 def render_explain():
     apply_pending()
@@ -48,14 +55,7 @@ def render_explain():
     feats = run["summary"]["features"]
     classes = run["summary"]["classes"]
 
-    options = ["explain", "compare"]
-    view = st.segmented_control(t("ex_view"), options, default="explain", key="ex_tab",
-                                format_func=lambda k: t("ex_tab_" + k),
-                                label_visibility="collapsed")
-    if view == "compare":
-        _comparison(rid)
-    else:
-        _explain_body(rid, run, model, feats, classes)
+    _explain_body(rid, run, model, feats, classes)
 
 
 def _comparison(rid):
