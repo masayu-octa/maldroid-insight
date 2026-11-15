@@ -26,3 +26,5 @@ LIMITS = {
     "guest": {"datasets": 2, "runs": 5, "mb": 5, "rows": 20000},
     "user": {"datasets": 10, "runs": 50, "mb": 50, "rows": 200000},
 }
+LIMITS["pro"] = {"datasets": 30, "runs": 200, "mb": 200, "rows": 500000}
+PRO_PRICE = "$4.99"   # harga simulasi (demo): tidak ada pembayaran sungguhan

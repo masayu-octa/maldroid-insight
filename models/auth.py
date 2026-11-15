@@ -26,7 +26,8 @@ def verify_password(password: str, stored: str) -> bool:
 
 
 def _row(r):
-    return None if r is None else {"id": r["id"], "email": r["email"], "name": r["name"], "plan": r["plan"]}
+    return None if r is None else {"id": r["id"], "email": r["email"], "name": r["name"], "plan": r["plan"],
+                                    "created_at": r["created_at"]}
 
 
 def get_by_email(email: str):
@@ -46,8 +47,29 @@ def get(user_id: int):
         return _row(con.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone())
 
 
+def get_row(user_id: int):
+    """Baris lengkap (termasuk hash password) untuk verifikasi."""
+    with db.connect() as con:
+        return con.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
+
+
 def set_plan(user_id: int, plan: str):
     if plan not in PLANS:
         raise ValueError(plan)
     with db.connect() as con:
         con.execute("UPDATE users SET plan = ? WHERE id = ?", (plan, user_id))
+
+
+def set_name(user_id: int, name: str):
+    with db.connect() as con:
+        con.execute("UPDATE users SET name = ? WHERE id = ?", (name, user_id))
+
+
+def set_password(user_id: int, password: str):
+    with db.connect() as con:
+        con.execute("UPDATE users SET pw_hash = ? WHERE id = ?", (hash_password(password), user_id))
+
+
+def delete_user(user_id: int):
+    with db.connect() as con:
+        con.execute("DELETE FROM users WHERE id = ?", (user_id,))

@@ -39,7 +39,7 @@ def separation_scores(ds_id):
 
 
 def _limits():
-    return LIMITS.get(db.owner_kind(), LIMITS["guest"]), db.owner_kind()
+          return LIMITS.get(db.tier(), LIMITS["guest"]), db.owner_kind()
 
 
 def _store(name, source, df, feats, info, label_col):

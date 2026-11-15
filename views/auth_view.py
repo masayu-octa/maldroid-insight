@@ -1,6 +1,7 @@
-"""Halaman Masuk / Daftar, kotak akun di sidebar, kartu terkunci, dan kartu info tamu."""
-import streamlit as st
+"""Halaman Masuk / Daftar, profil di sidebar, kartu terkunci, dan kartu info tamu."""
 import html
+
+import streamlit as st
 
 from controllers import auth_controller as ctl
 from controllers.auth_controller import MAX_TRIES
@@ -78,59 +79,35 @@ def render_auth():
                         st.session_state.pop(k, None)
                     st.rerun()
 
-def _initials(name):
+
+def initials(name):
     parts = [p for p in (name or "?").split() if p]
     return ("".join(p[0] for p in parts[:2]) or "?").upper()
 
 
-def profile_top():
-    """Menu profil di atas sidebar: avatar, nama, email, paket."""
+def profile_top(pages):
+    """Menu profil di atas sidebar: seluruh kartu bisa diklik menuju halaman Profil."""
     u = current_user()
     if not u:
         return
-    st.markdown(
-        f'<div class="pr-card"><div class="pr-av">{html.escape(_initials(u["name"]))}</div>'
-        f'<div class="pr-info"><b>{html.escape(u["name"] or "")}</b>'
-        f'<span>{html.escape(u["email"])}</span>'
-        f'<em>{t("auth_plan_" + u["plan"])}</em></div></div>', unsafe_allow_html=True)
+    with st.container(key="profcard"):
+        st.markdown(
+            f'<div class="pr-card"><div class="pr-av">{html.escape(initials(u["name"]))}</div>'
+            f'<div class="pr-info"><b>{html.escape(u["name"] or "")}</b>'
+            f'<span>{html.escape(u["email"])}</span>'
+            f'<em>{t("auth_plan_" + u["plan"])}</em></div></div>', unsafe_allow_html=True)
+        st.page_link(pages["profile"], label=t("pr_open"), icon=":material/settings:")
 
 
-def plans_dialog():
-    """Jendela informasi paket: perbandingan batas tamu vs akun."""
-    from config import GUEST_TTL_HOURS, LIMITS
-    import pandas as pd
-
-    @st.dialog(t("pi_title"))
-    def _body():
-        g, u = LIMITS["guest"], LIMITS["user"]
-        rows = [
-            (t("pi_datasets"), g["datasets"], u["datasets"]),
-            (t("pi_runs"), g["runs"], u["runs"]),
-            (t("pi_mb"), f'{g["mb"]} MB', f'{u["mb"]} MB'),
-            (t("pi_rows"), f'{g["rows"]:,}', f'{u["rows"]:,}'),
-            (t("pi_keep"), f"{GUEST_TTL_HOURS} h", t("pi_forever")),
-            (t("pi_ai"), t("pi_no"), t("pi_yes")),
-        ]
-        df = pd.DataFrame(rows, columns=[t("pi_col_feat"), t("pi_col_guest"), t("pi_col_user")]).astype(str)
-        st.dataframe(df, hide_index=True, use_container_width=True)
-        st.info(t("pi_pro"))
-
-    _body()
-
-
-def profile_bottom():
-    """Bagian bawah sidebar: tombol info paket dan keluar."""
+def profile_bottom(pages):
+    """Bagian bawah sidebar: info paket dan keluar."""
     if not current_user():
         return
     if st.button(t("pi_btn"), key="sb_plans", icon=":material/workspace_premium:", use_container_width=True):
-        plans_dialog()
+        st.switch_page(pages["plans"])
     st.button(t("auth_logout"), on_click=logout, key="sb_logout", icon=":material/logout:",
               use_container_width=True)
 
-
-def account_box():
-    """Kompatibilitas lama: sekarang sama dengan bagian bawah."""
-    profile_bottom()
 
 def locked_card(key=None):
     """Kartu 'butuh login' untuk tamu (dipakai halaman terkunci dan panel AI)."""

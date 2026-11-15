@@ -36,7 +36,7 @@ def execute(ds_id, cfg, progress=None):
     """cfg: scenario, excluded, shared_with, mode, models, holdout, cv, folds, smote, fast, n_rows.
     Mengembalikan run_id."""
     kind = db.owner_kind()
-    lim = LIMITS.get(kind, LIMITS["guest"])
+    lim = LIMITS.get(db.tier(), LIMITS["guest"])
     if db.count("runs") >= lim["runs"]:
         raise PipelineError("pl_err_runs_" + kind, n=lim["runs"])
     cfg = {**cfg, "n_rows": min(cfg["n_rows"], lim["rows"])}

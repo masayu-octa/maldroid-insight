@@ -94,7 +94,7 @@ def render_pipeline():
         speed = st.radio(t("pl_speed"), ["fast", "full"], horizontal=True, key="pl_speed",
                          format_func=lambda k: t("pl_" + k), help=t("pl_speed_help"))
         total = meta["n_rows"]
-        cap = min(total, LIMITS.get(db.owner_kind(), LIMITS["guest"])["rows"])
+        cap = min(total, LIMITS.get(db.tier(), LIMITS["guest"])["rows"])
         if cap > 2000:
             n_used = int(st.number_input(t("pl_maxrows"), min_value=2000, max_value=cap,
                                          value=min(20000, cap), step=1000, key=f"pl_rows_{ds_id}"))

@@ -4,15 +4,17 @@ import streamlit as st
 from i18n import t
 from views.auth_view import profile_bottom, profile_top
 
+# (kunci halaman, ikon) ; grup = (kunci grup, [(kunci anak, label_i18n)])
 ICON = {"home": ":material/space_dashboard:", "datasets": ":material/dataset:", "pipeline": ":material/tune:",
         "explain": ":material/manage_search:", "predict": ":material/online_prediction:",
         "sus": ":material/rate_review:", "datasets_mine": ":material/folder_open:",
         "datasets_add": ":material/upload_file:", "explain_main": ":material/psychology:",
-        "compare": ":material/compare_arrows:", "auth": ":material/login:"}
-MENU = [("home", None), ("datasets", ["datasets_mine", "datasets_add"]), ("pipeline", None),
+        "compare": ":material/compare_arrows:", "auth": ":material/login:",
+        "overview": ":material/monitoring:", "profile": ":material/person:", "plans": ":material/workspace_premium:"}
+MENU = [("home", None), ("overview", None), ("datasets", ["datasets_mine", "datasets_add"]), ("pipeline", None),
         ("explain", ["explain_main", "compare"]), ("predict", None), ("sus", None)]
 # halaman yang butuh login (tamu melihat layar "terkunci")
-LOCKED = {"predict", "explain_main", "compare"}
+LOCKED = {"predict", "explain_main", "compare", "overview", "profile", "plans"}
 # kolom menu "Features" saat kursor di atasnya: (judul kolom, [halaman])
 MEGA = [("nav_col_data", ["datasets_mine", "datasets_add"]),
         ("nav_col_models", ["pipeline", "explain_main", "compare"]),
@@ -25,8 +27,11 @@ def label(key):
     return t(LABEL.get(key, "nav_" + key))
 
 
-CHEV = ('<svg width="18" height="18" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5" fill="none" '
-        'stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>')
+CHEV = '<svg width="18" height="18" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+
+
+def is_guest():
+    return st.session_state.get("user") is None
 
 
 def guest_topnav(pages):
@@ -34,7 +39,8 @@ def guest_topnav(pages):
     with st.container(key="topnav"):
         st.page_link(pages["home"], label=label("home"), icon=ICON["home"])
         with st.container(key="navfeat"):
-            st.markdown(f'<span class="nf-trigger">{t("nav_features")}{CHEV}</span>', unsafe_allow_html=True)
+            st.markdown(f'<span class="nf-trigger">{t("nav_features")}'
+                        f'{CHEV}</span>', unsafe_allow_html=True)
             with st.container(key="mega"):
                 for col, (head, keys) in zip(st.columns(3), MEGA):
                     with col:
@@ -49,7 +55,7 @@ def guest_topnav(pages):
 def sidebar(pages, current):
     """Sidebar kiri: profil di atas, menu di tengah, info paket dan keluar di bawah."""
     with st.sidebar:
-        profile_top()
+        profile_top(pages)
         for key, kids in MENU:
             if not kids:
                 st.page_link(pages[key], label=label(key), icon=ICON[key])
@@ -58,4 +64,4 @@ def sidebar(pages, current):
                 for k in kids:
                     st.page_link(pages[k], label=label(k), icon=ICON[k])
         st.divider()
-        profile_bottom()
+        profile_bottom(pages)

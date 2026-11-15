@@ -11,8 +11,12 @@ from config import DB_PATH, DATASET_DIR
 _OWNER = contextvars.ContextVar("owner", default="none")
 
 
-def set_owner(owner):
+_PLAN = contextvars.ContextVar("plan", default="free")
+
+
+def set_owner(owner, plan="free"):
     _OWNER.set(owner)
+    _PLAN.set(plan or "free")
 
 
 def get_owner():
@@ -23,6 +27,12 @@ def owner_kind():
     o = get_owner()
     return "guest" if o.startswith("g:") else "user" if o.startswith("u:") else "none"
 
+def tier():
+    """Kunci batas pemakaian (config.LIMITS): guest / user / pro."""
+    k = owner_kind()
+    if k == "user" and _PLAN.get() == "pro":
+        return "pro"
+    return "user" if k == "user" else "guest"
 
 SCHEMA = """
 PRAGMA foreign_keys = ON;
