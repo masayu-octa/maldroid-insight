@@ -20,17 +20,26 @@ def current_user():
     return st.session_state.get("user")
 
 
+_WORK_PREFIX = ("pl_", "mc_", "ex_", "pr_", "cr_", "cmp_", "ds_", "gd_", "ad_", "_pl_", "_ex_", "_upload",
+                "_pred_upload", "_pending", "_next_pipeline", "_flash", "_receipt")
+
+
+def _reset_workspace():
+    """Hapus pilihan dataset/run dan hasil sementara milik sesi sebelumnya."""
+    for k in [k for k in st.session_state if str(k).startswith(_WORK_PREFIX)]:
+        del st.session_state[k]
+
+
 def logout():
+    _reset_workspace()
     st.session_state["user"] = None
 
 
 def _start(user):
-    # data milik tamu di browser ini ikut pindah ke akun
-    moved = db.claim(db.get_owner(), f"u:{user['id']}") if db.owner_kind() == "guest" else (0, 0)
+    # akun selalu mulai dari ruang kerja milik akun itu sendiri; data tamu tidak ikut pindah
+    _reset_workspace()
     st.session_state["user"] = user
     st.session_state["_auth_fail"] = 0
-    if moved[0] or moved[1]:
-        st.toast(t("auth_claimed", d=moved[0], r=moved[1]))
     st.switch_page(st.session_state["_home_page"])
 
 

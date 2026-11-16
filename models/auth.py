@@ -72,4 +72,5 @@ def set_password(user_id: int, password: str):
 
 def delete_user(user_id: int):
     with db.connect() as con:
+        con.execute("DELETE FROM payments WHERE user_id = ?", (user_id,))
         con.execute("DELETE FROM users WHERE id = ?", (user_id,))

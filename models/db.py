@@ -77,6 +77,21 @@ CREATE TABLE IF NOT EXISTS users (
     plan       TEXT NOT NULL DEFAULT 'free',
     created_at TEXT
 );
+
+CREATE TABLE IF NOT EXISTS payments (
+    id         INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id    INTEGER NOT NULL,
+    receipt    TEXT,
+    plan       TEXT NOT NULL,
+    period     TEXT NOT NULL,
+    amount     REAL NOT NULL,
+    brand      TEXT,
+    last4      TEXT,
+    status     TEXT NOT NULL,
+    reason     TEXT,
+    created_at TEXT
+);
+
 CREATE TABLE IF NOT EXISTS sus_responses (
     id         INTEGER PRIMARY KEY AUTOINCREMENT,
     respondent TEXT,
@@ -307,7 +322,28 @@ def delete_raw(ds_ids, run_ids):
             con.execute("DELETE FROM datasets WHERE id = ?", (did,))
 
 
+# ---------------- pembayaran ----------------
+def add_payment(user_id, plan, period, amount, brand, last4, status, reason=None):
+    """Simpan satu transaksi (hanya merek dan 4 digit terakhir kartu, tidak pernah nomor lengkap)."""
+    now = datetime.now()
+    with connect() as con:
+        cur = con.execute(
+            "INSERT INTO payments (user_id, plan, period, amount, brand, last4, status, reason, created_at) "
+            "VALUES (?,?,?,?,?,?,?,?,?)",
+            (user_id, plan, period, amount, brand, last4, status, reason, now.strftime("%Y-%m-%d %H:%M")))
+        pid = cur.lastrowid
+        receipt = f"MI-{now:%Y%m%d}-{pid:05d}"
+        con.execute("UPDATE payments SET receipt = ? WHERE id = ?", (receipt, pid))
+    return pid
+
+
+def list_payments(user_id):
+    with connect() as con:
+        return [dict(r) for r in con.execute(
+            "SELECT * FROM payments WHERE user_id = ? ORDER BY id DESC", (user_id,))]
+
 # ---------------- SUS ----------------
+
 def add_sus(respondent, answers, score):
     with connect() as con:
         con.execute("INSERT INTO sus_responses (respondent, answers, score, created_at) VALUES (?,?,?,?)",

@@ -37,9 +37,11 @@ def render_pipeline():
     flash()
     steps_box = st.empty()
     _steps(steps_box, True)
-    with st.expander(t("pl_steps_help")):
-        for n in ("log1p", "scaler", "smote", "model", "eval"):
-            st.markdown(f"**{t('pl_step_' + n + '_t')}**: {t('pl_step_' + n)}")
+    st.markdown(f"##### {t('pl_hyper_title')}")
+    st.dataframe(pd.DataFrame({
+            t("pl_col_model"): list(P.HYPERS),
+            t("pl_fast"): [v[0] for v in P.HYPERS.values()],
+            t("pl_full"): [v[1] for v in P.HYPERS.values()]}), hide_index=True)
     datasets = datasets_ctl.list_datasets()
     if not datasets:
         st.info(t("ds_none"))

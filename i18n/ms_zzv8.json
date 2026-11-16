@@ -1,0 +1,16 @@
+{
+ "nav_faq": "Soalan lazim",
+ "nd_faq": "Jawapan kepada soalan lazim tentang MalDroid Insight.",
+ "faq_sub": "Jawapan ringkas tentang pemasangan, format data, ketepatan dan lokasi fail disimpan.",
+ "gd_cols_help": "Setiap lajur pada templat di atas dan apa yang dilakukan alat ini dengannya.",
+ "gd_api_title": "Dapatkan sampel standard daripada set data awam",
+ "gd_api_help": "Memuat turun beberapa baris pertama set data perisian hasad Android awam melalui Hugging Face Datasets Server API, supaya anda dapat melihat susunan set data standard dan menyimpannya sebagai CSV untuk berlatih. Masukkan id set data sebagai pemilik/nama. Memerlukan sambungan internet.",
+ "ex_how_title": "Cara membaca carta ini",
+ "pr_need_title": "Lajur yang diperlukan oleh CSV anda",
+ "pr_need": "Satu baris bagi setiap aplikasi. Model membaca {n} lajur ciri ini, dipadankan mengikut nama: {names}. Lajur yang tiada diisi 0.",
+ "pr_need_more": "dan {n} lagi",
+ "pr_dl_cols": "Muat turun senarai lajur sebagai CSV kosong",
+ "pr_label_opt": "Semak dengan label sebenar",
+ "pr_label_help": "Jika fail anda sudah ada lajur label (contohnya Benign atau keluarga perisian hasad), pilih di sini dan ramalan dibandingkan dengan label sebenar.",
+ "hm_terms": "Istilah berkaitan"
+}

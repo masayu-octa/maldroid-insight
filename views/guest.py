@@ -14,7 +14,11 @@ def resolve_owner():
     user = st.session_state.get("user")
     if user:
         return f"u:{user['id']}"
-    tok = _token_component(key="gt", default=None)
+    tok = st.session_state.get("_gtok")        # token sudah diterima di sesi ini (tetap ada saat pindah halaman)
+    if not tok:
+        tok = _token_component(key="gt", default=None)
+        if isinstance(tok, str) and _TOKEN.match(tok):
+            st.session_state["_gtok"] = tok
     if not (isinstance(tok, str) and _TOKEN.match(tok)):
         # Token asli dari browser belum diterima: hentikan run ini.
         # Komponen akan membalas dalam beberapa milidetik dan Streamlit otomatis menjalankan ulang.

@@ -41,7 +41,8 @@ def render_ai_panel(rid, model, run, share, classes, feats, builtin, src, sample
     hist_key = f"ai_chat_{rid}_{model}"
     history = st.session_state.setdefault(hist_key, [])
     used = st.session_state.get("ai_used", 0)
-    left = max(0, actl.FREE_QUESTIONS - used)
+    limit = actl.question_limit()                      # None = tanpa batas (Pro)
+    left = None if limit is None else max(0, limit - used)
     can_chat = actl.available()
 
     # ---------- bilah atas: sampel + sisa pertanyaan + hapus ----------
@@ -50,7 +51,7 @@ def render_ai_panel(rid, model, run, share, classes, feats, builtin, src, sample
     if sample and can_chat:
         use_sample = top1.checkbox(t("ai_use_sample"), value=True, key=f"ai_use_sample_{rid}_{model}")
     if can_chat:
-        top2.caption(t("ai_remaining", n=left, total=actl.FREE_QUESTIONS))
+            top2.caption(t("ai_unlimited") if limit is None else t("ai_remaining", n=left, total=limit))
     if history and top3.button(t("ai_clear"), key=f"ai_clear_{rid}_{model}"):
         st.session_state[hist_key] = []
         st.rerun()
@@ -82,6 +83,7 @@ def render_ai_panel(rid, model, run, share, classes, feats, builtin, src, sample
         return
     if left == 0:
         st.info(t("ai_limit"))
+        st.page_link(st.session_state["_plans_page"], label=t("pi_btn"), icon=":material/workspace_premium:")
         return
     with st.container():
         q = st.chat_input(t("ai_chat_hint"), key=f"ai_input_{rid}_{model}")

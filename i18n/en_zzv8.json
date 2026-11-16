@@ -1,0 +1,16 @@
+{
+ "nav_faq": "FAQ",
+ "nd_faq": "Answers to common questions about using MalDroid Insight.",
+ "faq_sub": "Quick answers about installing, data formats, accuracy and where your files are kept.",
+ "gd_cols_help": "Every column of the template above, and what the tool does with it.",
+ "gd_api_title": "Get a standard sample from a public dataset",
+ "gd_api_help": "Downloads the first rows of a public Android malware dataset from the Hugging Face Datasets Server API, so you can see how a standard dataset is laid out and save it as a CSV to practise with. Enter a dataset id as owner/name. Needs an internet connection.",
+ "ex_how_title": "How to read these charts",
+ "pr_need_title": "Columns your CSV needs",
+ "pr_need": "One row per app. The model reads these {n} feature columns, matched by name: {names}. Columns that are missing are filled with 0.",
+ "pr_need_more": "and {n} more",
+ "pr_dl_cols": "Download the column list as a blank CSV",
+ "pr_label_opt": "Check against real labels",
+ "pr_label_help": "If your file already has a label column (for example Benign or the malware family), pick it here and the predictions are compared with the real labels.",
+ "hm_terms": "Related terms"
+}

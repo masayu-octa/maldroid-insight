@@ -10,11 +10,12 @@ ICON = {"home": ":material/space_dashboard:", "datasets": ":material/dataset:", 
         "sus": ":material/rate_review:", "datasets_mine": ":material/folder_open:",
         "datasets_add": ":material/upload_file:", "explain_main": ":material/psychology:",
         "compare": ":material/compare_arrows:", "auth": ":material/login:",
-        "overview": ":material/monitoring:", "profile": ":material/person:", "plans": ":material/workspace_premium:"}
+        "overview": ":material/monitoring:", "profile": ":material/person:", "plans": ":material/workspace_premium:",
+        "checkout": ":material/credit_card:", "faq":":material/help:"}
 MENU = [("home", None), ("overview", None), ("datasets", ["datasets_mine", "datasets_add"]), ("pipeline", None),
-        ("explain", ["explain_main", "compare"]), ("predict", None), ("sus", None)]
+        ("explain", ["explain_main", "compare"]), ("predict", None), ("sus", None), ("faq", None)]
 # halaman yang butuh login (tamu melihat layar "terkunci")
-LOCKED = {"predict", "explain_main", "compare", "overview", "profile", "plans"}
+LOCKED = {"predict", "explain_main", "compare", "overview", "profile", "plans", "checkout"}
 # kolom menu "Features" saat kursor di atasnya: (judul kolom, [halaman])
 MEGA = [("nav_col_data", ["datasets_mine", "datasets_add"]),
         ("nav_col_models", ["pipeline", "explain_main", "compare"]),
@@ -50,6 +51,7 @@ def guest_topnav(pages):
                             with st.container(key=f"mi_{k}"):      # satu kotak per fitur (nama + deskripsi)
                                 st.page_link(pages[k], label=label(k), icon=":material/lock:" if lock else ICON[k])
                                 st.markdown(f'<div class="mg-desc">{t("nd_" + k)}</div>', unsafe_allow_html=True)
+        st.page_link(pages["faq"], label=label("faq"), icon=ICON["faq"])
 
 
 def sidebar(pages, current):

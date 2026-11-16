@@ -1,0 +1,16 @@
+{
+ "nav_faq": "常见问题",
+ "nd_faq": "关于使用 MalDroid Insight 的常见问题解答。",
+ "faq_sub": "关于安装、数据格式、准确率和文件保存位置的简短解答。",
+ "gd_cols_help": "上方模板中的每一列，以及工具如何使用它。",
+ "gd_api_title": "从公开数据集获取标准样本",
+ "gd_api_help": "通过 Hugging Face Datasets Server API 下载公开安卓恶意软件数据集的前几行，让您了解标准数据集的结构，并保存为 CSV 用于练习。以 所有者/名称 的格式输入数据集 ID。需要联网。",
+ "ex_how_title": "如何阅读这些图表",
+ "pr_need_title": "CSV 需要的列",
+ "pr_need": "每个应用一行。模型读取这 {n} 个特征列，按名称匹配：{names}。缺少的列按 0 填充。",
+ "pr_need_more": "另有 {n} 个",
+ "pr_dl_cols": "下载列名清单（空白 CSV）",
+ "pr_label_opt": "与真实标签对照",
+ "pr_label_help": "如果文件中已有标签列（例如 Benign 或恶意软件家族），请在此选择，预测结果会与真实标签对比。",
+ "hm_terms": "相关术语"
+}

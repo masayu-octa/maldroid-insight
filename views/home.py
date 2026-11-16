@@ -17,8 +17,7 @@ STEPS = [("prep", "datasets", None), ("add", "datasets", None), ("check", "datas
          ("explain", "explain", "run"), ("predict", "predict", "run"), ("sus", "sus", None)]
 ACCENT = {"datasets": "#254F73", "pipeline": "#3C7A5A", "models": "#C9983A", "cross": "#6B7FB0",
           "explain": "#B0583A", "predict": "#2F8F9D", "sus": "#8A5FA8"}
-GLOSSARY = ["log1p", "scaler", "smote", "leak", "holdout", "cv", "perm", "f1m"]
-FAQ = ["install", "format", "toogood", "which", "av", "store"]
+TERMS = {"smote": ["leak"], "eval": ["holdout", "cv", "f1m", "perm"]}
 
 
 def render_home():
@@ -31,7 +30,7 @@ def render_home():
     _feature_guide()
     _pipeline_section()
     _workspace(s)
-    _help_sections()
+    _good_to_know()
 
 
 def _landing():
@@ -188,6 +187,11 @@ def _pipeline_section():
     st.markdown(
         f'<div class="flowinfo" style="--c:{color[sel]}"><b>{t("pl_step_" + sel + "_t")}</b>'
         f'<p>{t("pl_step_" + sel)}</p></div>', unsafe_allow_html=True)
+    terms = TERMS.get(sel, [])
+    if terms:
+        st.markdown(f"**{t('hm_terms')}**")
+        for g in terms:
+            st.markdown(f"- **{t(f'gl_{g}_t')}**: {t(f'gl_{g}_d')}")
     st.markdown(f"**{t('lp_fastfull_t')}**: {t('lp_fastfull_d')}")
 
 def _workspace(s):
@@ -214,13 +218,6 @@ def _workspace(s):
     show(style(fig, legend=True))
 
 
-def _help_sections():
+def _good_to_know():
     st.markdown(f"### {t('lp_good_title')}")
     st.markdown(t("lp_good"))
-    with st.expander(t("lp_faq_title")):
-        for q in FAQ:
-            st.markdown(f"**{t('lp_faq_' + q + '_q')}**")
-            st.markdown(t("lp_faq_" + q + "_a"))
-    with st.expander(t("hm_gloss_title")):
-        for g in GLOSSARY:
-            st.markdown(f"**{t(f'gl_{g}_t')}**: {t(f'gl_{g}_d')}")

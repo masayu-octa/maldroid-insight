@@ -1,0 +1,16 @@
+{
+ "nav_faq": "FAQ",
+ "nd_faq": "Jawaban atas pertanyaan umum tentang MalDroid Insight.",
+ "faq_sub": "Jawaban singkat tentang instalasi, format data, akurasi, dan tempat file disimpan.",
+ "gd_cols_help": "Setiap kolom pada templat di atas dan apa yang dilakukan alat ini dengannya.",
+ "gd_api_title": "Ambil sampel standar dari dataset publik",
+ "gd_api_help": "Mengunduh beberapa baris pertama dataset malware Android publik lewat Hugging Face Datasets Server API, jadi kamu bisa melihat susunan dataset standar dan menyimpannya sebagai CSV untuk latihan. Isi id dataset dengan format pemilik/nama. Perlu koneksi internet.",
+ "ex_how_title": "Cara membaca grafik ini",
+ "pr_need_title": "Kolom yang dibutuhkan CSV kamu",
+ "pr_need": "Satu baris per aplikasi. Model membaca {n} kolom fitur ini, dicocokkan berdasarkan nama: {names}. Kolom yang tidak ada diisi 0.",
+ "pr_need_more": "dan {n} lainnya",
+ "pr_dl_cols": "Unduh daftar kolom sebagai CSV kosong",
+ "pr_label_opt": "Cocokkan dengan label asli",
+ "pr_label_help": "Jika file kamu sudah punya kolom label (misalnya Benign atau nama keluarga malware), pilih di sini dan prediksi dibandingkan dengan label asli.",
+ "hm_terms": "Istilah terkait"
+}

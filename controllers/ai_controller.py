@@ -4,9 +4,9 @@ import hashlib
 import streamlit as st
 
 from config import DEFAULT_LANG
-from models import ai
+from models import ai, db
 
-FREE_QUESTIONS = 5            # batas pertanyaan chatbot per sesi (paket gratis, disimulasikan)
+FREE_QUESTIONS = 5            # batas pertanyaan chatbot per sesi untuk paket Free (Pro tanpa batas)
 DEFAULT_MODEL = "gemini-3.8-flash"
 
 
@@ -19,6 +19,9 @@ def config():
         key, model = None, DEFAULT_MODEL
     return key, model
 
+def question_limit():
+    """Batas pertanyaan chatbot per sesi; None berarti tanpa batas (paket Pro)."""
+    return None if db.tier() == "pro" else FREE_QUESTIONS
 
 def available():
     return config()[0] is not None

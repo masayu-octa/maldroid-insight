@@ -39,8 +39,13 @@ def render_predict():
 
     st.markdown(f'<div class="prov">{t("pr_expect", n=len(feats), c=", ".join(classes))}</div>',
                 unsafe_allow_html=True)
-    with st.expander(t("pr_feat_list")):
-        st.write(", ".join(feats))
+    st.markdown(f"##### {t('pr_need_title')}")
+    top = sorted(feats, key=lambda f: -imp.get(f, 0))[:12]
+    more = len(feats) - len(top)
+    st.markdown(t("pr_need", n=len(feats), names=", ".join(f"`{f}`" for f in top)
+                  + (" " + t("pr_need_more", n=more) if more > 0 else "")))
+    st.download_button(t("pr_dl_cols"), ",".join(feats) + "\n", file_name="expected_columns.csv", mime="text/csv",
+                       key=f"pr_cols_{rid}")
 
     file = st.file_uploader(t("pr_upload"), type=["csv"], key="pr_file")
     if not file:
@@ -82,14 +87,14 @@ def render_predict():
     if weighted is not None and weighted < 0.7:
         st.warning(t("pr_warn_w"))
 
-    with st.expander(t("pr_label_opt")):
-        st.caption(t("pr_label_help"))
-        lab_col = st.selectbox(t("pr_label_col"), [NONE] + list(df.columns), key=f"pr_lab_{rid}")
-        benign_vals = []
-        if lab_col != NONE:
-            vals = sorted(df[lab_col].astype(str).unique())[:50]
-            default = [v for v in vals if "benign" in v.lower() or v.lower() in ("0", "clean", "legitimate")]
-            benign_vals = st.multiselect(t("pr_benign_vals"), vals, default=default, key=f"pr_ben_{rid}_{lab_col}")
+    st.markdown(f"##### {t('pr_label_opt')}")
+    st.caption(t("pr_label_help"))
+    lab_col = st.selectbox(t("pr_label_col"), [NONE] + list(df.columns), key=f"pr_lab_{rid}")
+    benign_vals = []
+    if lab_col != NONE:
+        vals = sorted(df[lab_col].astype(str).unique())[:50]
+        default = [v for v in vals if "benign" in v.lower() or v.lower() in ("0", "clean", "legitimate")]
+        benign_vals = st.multiselect(t("pr_benign_vals"), vals, default=default, key=f"pr_ben_{rid}_{lab_col}")
 
     sig = (rid, model, file.name, file.size, tuple(sorted(mapping.items())))
     if st.button(t("pr_run"), type="primary", key="pr_go"):

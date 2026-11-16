@@ -27,4 +27,6 @@ LIMITS = {
     "user": {"datasets": 10, "runs": 50, "mb": 50, "rows": 200000},
 }
 LIMITS["pro"] = {"datasets": 30, "runs": 200, "mb": 200, "rows": 500000}
-PRO_PRICE = "$4.99"   # harga simulasi (demo): tidak ada pembayaran sungguhan
+# Harga paket Pro (USD) dan lama tiap periode tagihan (hari)
+PRO_PRICES = {"monthly": 4.99, "yearly": 49.90}
+PERIOD_DAYS = {"monthly": 30, "yearly": 365}

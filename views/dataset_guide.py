@@ -51,8 +51,9 @@ def _template():
         t("gd_col_name"): name, t("gd_col_role"): t("gd_role_" + role),
         t("gd_col_meaning"): t("tp_grp_" + grp) if grp else t("gd_meaning_" + role)}
         for name, role, grp in T.column_guide(kind)])
-    with st.expander(t("gd_cols_title")):
-        st.dataframe(guide, hide_index=True)
+    st.markdown(f"##### {t('gd_cols_title')}")
+    st.caption(t("gd_cols_help"))
+    st.dataframe(guide, hide_index=True)
 
     c1, c2 = st.columns(2)
     c1.download_button(t("gd_dl_sample"), ctl.template_csv(kind), file_name=f"maldroid_template_{kind}.csv",

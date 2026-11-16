@@ -156,11 +156,6 @@ def _explain_body(rid, run, model, feats, classes):
               "effects": [(f, float(v)) for f, v in eff[::-1].head(10).items()]}
     render_ai_panel(rid, model, run, share, classes, feats, builtin, src, sample)
 
-    # ---------- 4. AI opsional (salin prompt) ----------
-    with st.expander(t("ex_ai_title")):
-        st.markdown(t("ex_ai_help"))
-        lines = "\n".join(f"- {f}: {share[f] * 100:.1f}%" for f in share.sort_values(ascending=False).index[:8])
-        st.code(t("ex_ai_prompt", ds=run["dataset"], m=model, cl=", ".join(classes), n=len(feats), lines=lines),
-                language="text")
-    with st.expander(t("ex_how_title")):
-        st.markdown(t("ex_how"))
+    # ---------- 4. Cara membaca halaman ----------
+    st.markdown(f"##### {t('ex_how_title')}")
+    st.markdown(t("ex_how"))

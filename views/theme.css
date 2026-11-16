@@ -323,3 +323,33 @@ h2,h3,h5{color:#141F52;}
 [data-testid="stSidebar"] [data-testid="stExpander"]{margin:2px 0;}
 /* nama web di header tidak menabrak tombol titik tiga saat sidebar ditutup */
 .stApp:has([data-testid="stSidebar"]) [data-testid="stHeader"]::before{left:84px !important;}
+
+/* Halaman Paket: kartu lebih lega */
+.st-key-plan_free,.st-key-plan_pro{padding:30px 34px 28px !important;border-radius:16px !important;background:#FFFFFF;}
+.st-key-plan_free [data-testid="stVerticalBlock"],.st-key-plan_pro [data-testid="stVerticalBlock"]{gap:.9rem;}
+.pp-name{margin-bottom:6px;}
+.pp-price{margin:14px 0 4px;}
+.pp-year{min-height:20px;color:#5a6785;font-size:.9rem;margin-bottom:10px;}
+.pp-tag{margin:6px 0 18px;line-height:1.55;}
+.pp-list{padding-left:1.2rem;margin:0 0 22px;}
+.pp-list li{margin:9px 0;line-height:1.45;}
+.pp-list li::marker{color:#254F73;}
+.st-key-pp_manage{padding:22px 28px !important;border-radius:14px !important;background:#FFFFFF;margin:8px 0 18px;}
+.pp-m-title{font-weight:800;color:#141F52;font-size:1.05rem;margin-bottom:10px;}
+.pp-m-line{font-weight:700;color:#141F52;}
+.pp-m-sub{color:#5a6785;font-size:.9rem;margin-top:4px;}
+.pp-now{margin:6px 0 14px;}
+
+/* Halaman Pembayaran */
+.co-h{font-weight:800;color:#141F52;font-size:1.05rem;margin:0 0 12px;}
+.st-key-co_form_box,.st-key-co_sum,.st-key-co_receipt{padding:26px 30px !important;border-radius:16px !important;background:#FFFFFF;}
+.st-key-co_form_box{margin-top:12px;}
+.co-row{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid #EFE6D2;color:#3F4A6B;}
+.co-row b{color:#141F52;text-align:right;}
+.co-row.total{border-bottom:0;padding-top:16px;font-size:1.15rem;}
+.co-row.total b{font-size:1.6rem;color:#254F73;}
+.co-save{background:#E8F1EA;color:#2F6B4A;border-radius:10px;padding:9px 14px;font-size:.9rem;margin:6px 0 4px;}
+.co-inc{font-weight:700;color:#141F52;margin:20px 0 8px;}
+.co-list{padding-left:1.2rem;margin:0;color:#141F52;}
+.co-list li{margin:7px 0;}
+.co-list li::marker{color:#254F73;}
